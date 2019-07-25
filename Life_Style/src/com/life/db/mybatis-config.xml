@@ -6,7 +6,7 @@
 	<properties resource="com/life/db/db.properties"></properties>
 	<typeAliases>
 		<typeAlias type="com.life.dto.account_dto" alias="account_dto"/>
-		<typeAlias type="com.life.dto.baskey_dto" alias="basket_dto"/>
+		<typeAlias type="com.life.dto.basket_dto" alias="basket_dto"/>
 		<typeAlias type="com.life.dto.board_dto" alias="board_dto"/>
 		<typeAlias type="com.life.dto.comment_dto" alias="comment_dto"/>
 		<typeAlias type="com.life.dto.friend_dto" alias="friend_dto"/>
@@ -29,16 +29,16 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="com/my/db/member-mapper.xml"/>
-    <mapper resource="com/my/db/friend-mapper.xml"/>
-    <mapper resource="com/my/db/account-mapper.xml"/>
-    <mapper resource="com/my/db/board-mapper.xml"/>
-    <mapper resource="com/my/db/comment-mapper.xml"/>
-    <mapper resource="com/my/db/map-mapper.xml"/>
-    <mapper resource="com/my/db/health-mapper.xml"/>
-    <mapper resource="com/my/db/basket-mapper.xml"/>
-    <mapper resource="com/my/db/schedule-mapper.xml"/>
-    <mapper resource="com/my/db/statistics-mapper.xml"/>
-    <mapper resource="com/my/db/message-mapper.xml"/>
+    <mapper resource="com/life/db/member-mapper.xml"/>
+    <mapper resource="com/life/db/friend-mapper.xml"/>
+    <mapper resource="com/life/db/account-mapper.xml"/>
+    <mapper resource="com/life/db/board-mapper.xml"/>
+    <mapper resource="com/life/db/comment-mapper.xml"/>
+    <mapper resource="com/life/db/map-mapper.xml"/>
+    <mapper resource="com/life/db/health-mapper.xml"/>
+    <mapper resource="com/life/db/basket-mapper.xml"/>
+    <mapper resource="com/life/db/schedule-mapper.xml"/>
+    <mapper resource="com/life/db/statistics-mapper.xml"/>
+    <mapper resource="com/life/db/message-mapper.xml"/>
   </mappers>
 </configuration>
