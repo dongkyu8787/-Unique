@@ -6,18 +6,33 @@ public class board_dto {
 	private int board_no_seq;
 	private int board_group_order;
 	private int board_groupno_seq;
+	private int board_tab;
 	private String board_writer;
 	private String board_title;
 	private String board_content;
 	private Date board_regdate;
 	private String board_location;
-	private int board_views_seq;
+	private int board_viewnum;
 	private String board_tag;
 	private String board_genderlimit;
 	private int board_age_min;
 	private int board_age_max;
-	private String board_peoplelimit;
+	private int board_peoplelimit;
 	private Date board_timelimit;
+	private String board_del;
+	
+	public String getBoard_del() {
+		return board_del;
+	}
+	public void setBoard_del(String board_del) {
+		this.board_del = board_del;
+	}
+	public int getBoard_tab() {
+		return board_tab;
+	}
+	public void setBoard_tab(int board_tab) {
+		this.board_tab = board_tab;
+	}
 	public int getBoard_no_seq() {
 		return board_no_seq;
 	}
@@ -66,12 +81,14 @@ public class board_dto {
 	public void setBoard_location(String board_location) {
 		this.board_location = board_location;
 	}
-	public int getBoard_views_seq() {
-		return board_views_seq;
+
+	public int getBoard_viewnum() {
+		return board_viewnum;
 	}
-	public void setBoard_views_seq(int board_views_seq) {
-		this.board_views_seq = board_views_seq;
+	public void setBoard_viewnum(int board_viewnum) {
+		this.board_viewnum = board_viewnum;
 	}
+	
 	public String getBoard_tag() {
 		return board_tag;
 	}
@@ -96,10 +113,10 @@ public class board_dto {
 	public void setBoard_age_max(int board_age_max) {
 		this.board_age_max = board_age_max;
 	}
-	public String getBoard_peoplelimit() {
+	public int getBoard_peoplelimit() {
 		return board_peoplelimit;
 	}
-	public void setBoard_peoplelimit(String board_peoplelimit) {
+	public void setBoard_peoplelimit(int board_peoplelimit) {
 		this.board_peoplelimit = board_peoplelimit;
 	}
 	public Date getBoard_timelimit() {

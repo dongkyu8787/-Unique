@@ -16,6 +16,7 @@
 		<typeAlias type="com.life.dto.message_dto" alias="message_dto"/>
 		<typeAlias type="com.life.dto.schedule_dto" alias="schedule_dto"/>
 		<typeAlias type="com.life.dto.statistics_dto" alias="statistics_dto"/>
+		<typeAlias type="com.life.dto.weather_dto" alias="weather_dto"/>
 	</typeAliases>
   <environments default="development">
     <environment id="development">
@@ -40,5 +41,6 @@
     <mapper resource="com/life/db/schedule-mapper.xml"/>
     <mapper resource="com/life/db/statistics-mapper.xml"/>
     <mapper resource="com/life/db/message-mapper.xml"/>
+    <mapper resource="com/life/db/weather-mapper.xml"/>
   </mappers>
 </configuration>

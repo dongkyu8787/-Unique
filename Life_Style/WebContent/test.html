@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+
+function test(){
+	location.href='meetingboard.do?command=meetingboard'
+}
+
+</script>
+
+
+</head>
+<body>
+
+
+	<form action="meetingboard.do?command=meetingupdateres" method="post">
+	<table border="1">
+	
+		<tr>
+			<th>글번호</th>
+			<td>${dto.board_no_seq }</td>
+		</tr>
+		<tr>
+			<th>글쓴이</th>
+			<td>${dto.board_writer }</td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><input name="title" type="text" value="${dto.board_title }"></td>
+		</tr>
+		<tr>
+			<th>글내용</th>
+			<td><textarea name="content" cols="80" rows="20" style="resize:none"></textarea></td>
+		</tr>
+		<tr>
+			<th>글작성일</th>
+			<td>${dto.board_regdate }</td>
+		</tr>
+		<tr>
+			<th>지역</th>
+			<td><input name="location" type="text" value="${dto.board_location }"></td>
+		</tr>
+		<tr>
+			<th>태그</th>
+			<td><input name="tag" type="text" value="${dto.board_tag }"></td>
+		</tr>
+		<tr>
+			<th>성별</th>
+			<td>${dto.board_genderlimit }</td>
+		</tr>
+		<tr>
+			<th>최소나이</th>
+			<td>${dto.board_age_min }</td>
+		</tr>
+		<tr>
+			<th>최대나이</th>
+			<td>${dto.board_age_max }</td>
+		</tr>
+		<tr>
+			<th>인원수제한</th>
+			<td>${dto.board_peoplelimit }</td>
+		</tr>
+		<tr>
+			<th>시간제한</th>
+			<td>${dto.board_timelimit }</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2">
+			<input type="submit" value="수정확인">
+			<input type="button" value="만남게시판" onclick="location.href='http://www.naver.com'">
+			<input type="button" value="만남" onclick="test()">
+			<button type="button" onclick="location.href='meetingboard.do?command=meetingboard'">만남게시판</button>
+			</td>
+		</tr>
+	
+	
+	</table>
+
+	</form>
+	<input type="button" value="만남게시판" onclick="location.href='meetingboard.do?command=meetingboard'">
+</body>
+</html>

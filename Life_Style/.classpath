@@ -13,5 +13,8 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/rlead/Downloads/jsoup-1.12.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rlead/Downloads/jsoup-1.12.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rlead/Downloads/jsoup-1.12.1-sources.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

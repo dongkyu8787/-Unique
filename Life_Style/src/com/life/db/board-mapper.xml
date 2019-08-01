@@ -3,5 +3,107 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.life.db.boardmapper">
-	 
+
+	<select id="selectlist" resultType="board_dto">
+	
+	SELECT * FROM BOARD 
+	ORDER BY BOARD_GROUPNO_SEQ DESC, BOARD_GROUP_ORDER 
+	
+	</select>
+	
+	<select id="selectone" parameterType="int" resultType="board_dto">
+	SELECT * FROM BOARD
+	WHERE BOARD_NO_SEQ = #{board_no_seq}
+	
+	</select>
+	
+	<update id="update" parameterType = "board_dto">
+
+	UPDATE BOARD 
+	SET BOARD_TITLE =#{board_title}, BOARD_CONTENT=#{board_content}, BOARD_LOCATION =#{board_location}, BOARD_TAG =#{board_tag}
+	WHERE BOARD_NO_SEQ =#{board_no_seq}
+	
+	</update>
+	
+	<update id="delete" parameterType="int">
+	
+	UPDATE BOARD 
+	SET BOARD_DEL='Y' 
+	WHERE BOARD_NO_SEQ=#{board_no_seq}	
+	
+	</update>
+	
+	<insert id="insert" parameterType="board_dto">
+	
+	INSERT INTO BOARD VALUES
+	(BOARD_SEQ.NEXTVAL, 
+	BOARDGROUP_SEQ.NEXTVAL, 
+	1,
+	0,
+	#{board_writer},
+	#{board_title},
+	#{board_content},
+	SYSDATE,
+	#{board_location},
+	0,
+	#{board_tag},
+	#{board_genderlimit},
+	#{board_age_min},
+	#{board_age_max},
+	#{board_peoplelimit},
+	TO_DATE('10-04-2010 20:37:50','MM-DD-YYYY HH24:MI:SS'),
+	'N')
+	
+	</insert>
+	
+	<update id="viewnum" parameterType="board_dto">
+	
+	UPDATE BOARD 
+	SET BOARD_VIEWNUM=#{board_viewnum}
+	WHERE BOARD_NO_SEQ =#{board_no_seq}
+	
+	
+	</update>
+	
+	<select id="totalnum" resultType="int">
+	
+	SELECT COUNT(BOARD_NO_SEQ) FROM BOARD 
+
+	</select>
+	
+	
+	
+	<insert id="insertAS" parameterType="board_dto">
+	
+	INSERT INTO BOARD VALUES
+	(BOARD_SEQ.NEXTVAL, 
+	(SELECT BOARD_GROUPNO_SEQ FROM BOARD WHERE BOARD_NO_SEQ=#{board_no_seq}), 
+	(SELECT BOARD_GROUP_ORDER FROM BOARD WHERE BOARD_NO_SEQ=#{board_no_seq})+1,
+	(SELECT BOARD_TAB FROM BOARD WHERE BOARD_NO_SEQ = #{board_no_seq})+1,
+	#{board_writer},
+	#{board_title},
+	#{board_content},
+	SYSDATE,
+	#{board_location},
+	0,
+	#{board_tag},
+	#{board_genderlimit},
+	#{board_age_min},
+	#{board_age_max},
+	#{board_peoplelimit},
+	TO_DATE('10-04-2010 20:37:50','MM-DD-YYYY HH24:MI:SS'),
+	'N')
+	
+	</insert>
+	
+	<update id="updateAS" parameterType="int">
+	
+	UPDATE BOARD SET BOARD_GROUP_ORDER = BOARD_GROUP_ORDER+1
+	WHERE BOARD_GROUP_ORDER > (SELECT BOARD_GROUP_ORDER FROM BOARD WHERE BOARD_NO_SEQ=#{board_no_seq}) 
+	
+	
+	</update>
+	
+	
+ 
 </mapper>

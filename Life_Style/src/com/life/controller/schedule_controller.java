@@ -13,11 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import com.life.biz.schedule_biz;
 import com.life.dao.Util;
 import com.life.dto.schedule_dto;
 
-import net.sf.json.JSONObject;
 
 @WebServlet("/schedule.do")
 public class schedule_controller extends HttpServlet {
@@ -46,10 +47,10 @@ public class schedule_controller extends HttpServlet {
 			Map<String, Integer> map = new HashMap<String, Integer>();
 			map.put("cnt", count);
 			
-			JSONObject obj = JSONObject.fromObject(map);
+			String obj = JSONObject.toJSONString(map);
 			
 			PrintWriter out = response.getWriter();
-			obj.write(out);
+			out.println(obj);
 		}else if(command.equals("list")) {
 			String year = request.getParameter("year");
 			String month = request.getParameter("month");
