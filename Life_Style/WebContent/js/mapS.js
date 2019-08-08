@@ -417,7 +417,6 @@ document.addEventListener('keydown', function(event) {
 	 //document.getElementById("userMarkerText").style.display = "block";
 	});
 	
-	searchAddrFromCoords(map.getCenter(), displayCenterInfo);
 	 
 	kakao.maps.event.addListener(map, 'idle', function() {
 	   

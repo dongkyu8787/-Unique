@@ -14,6 +14,7 @@ public class member_dto {
 	private String member_interest;
 	private String member_role;
 	private int member_point;
+	
 	public int getMember_no_seq() {
 		return member_no_seq;
 	}

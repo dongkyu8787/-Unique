@@ -4,10 +4,12 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import com.life.dto.message_dto;
 import com.life.dto.schedule_dto;
 
 public class Util {
 	private String toDates;
+	private String messageContent;
 	
 	public String getToDates() {
 		return toDates;
@@ -20,7 +22,7 @@ public class Util {
 				+ mdate.substring(8, 10)+":"
 				+ mdate.substring(10)+":00";
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy³âMM¿ùddÀÏ HH½ÃmmºĞ");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyë…„MMì›”ddì¼ HHì‹œmmë¶„");
 		Timestamp tm = Timestamp.valueOf(m);
 		toDates = sdf.format(tm);		
 	}
@@ -47,13 +49,21 @@ public class Util {
 	
 	public static String getCalView(int i, List<schedule_dto> clist) {
 		String d = isTwo(i+"");
-		String ¾¾¹ß = "";
+		String ã…‹ã…‹ = "";
 		
 		for(schedule_dto dto : clist) {
 			if(dto.getSchedule_date().substring(6,8).equals(d)) {
-					¾¾¹ß += "<p>" + ((dto.getSchedule_title().length()>6)? dto.getSchedule_title().substring(0,6)+"...":dto.getSchedule_title()) + "</p>";
+				ã…‹ã…‹ += "<p>" + ((dto.getSchedule_title().length()>6)? dto.getSchedule_title().substring(0,6)+"...":dto.getSchedule_title()) + "</p>";
 			}
 		}
-		return ¾¾¹ß;
+		return ã…‹ã…‹;
+	}
+	
+	public void setMessageContent(String message_content) {
+		messageContent = message_content.length() > 7 ? message_content.substring(0, 7)+ "...." : message_content; 
+	}
+	
+	public String getMessageContent() {
+		return messageContent;
 	}
 }

@@ -1,11 +1,15 @@
 package com.life.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.life.dto.board_dto;
+import com.life.dto.comment_dto;
+
 
 public class board_dao extends board_sqlmap {
 	private String namespace = "com.life.db.boardmapper.";
@@ -141,21 +145,7 @@ public class board_dao extends board_sqlmap {
 		return res;
 	}
 
-	public int totalnum() {
-		SqlSession session = null;
-		int totalnum = 0;
 
-		try {
-			session = getSqlSessionFactory().openSession();
-			totalnum = session.selectOne(namespace + "totalnum");
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-
-		return totalnum;
-	}
 
 	public int insertAS(board_dto dto) {
 		SqlSession session = null;
@@ -207,5 +197,92 @@ public class board_dao extends board_sqlmap {
 		return res;
 
 	}
+	
+	public List<board_dto> searchlist(Map<String, String> map){
+		SqlSession session= null;
+		List<board_dto> search_list = new ArrayList<board_dto>();
+		
+		try {
+			session = getSqlSessionFactory().openSession();
+			search_list = session.selectList(namespace+"selectlist",map);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		
+		return search_list;
+		
+	}
+	
+	public List<comment_dto> selectlist_comment(int board_no_seq){
+		SqlSession session = null;
+		List<comment_dto> comment_list = new ArrayList<comment_dto>();
+
+		try {
+			session = getSqlSessionFactory().openSession();
+			comment_list = session.selectList(namespace + "selectlist_comment",board_no_seq);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return comment_list;
+	}
+	
+	public int delete_comment(int comment_no_seq, String member_id) {
+		
+		SqlSession session = null;
+		int res = 0;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_id", member_id);
+		map.put("comment_no_seq", comment_no_seq+"");
+		try {
+			session = getSqlSessionFactory().openSession();
+			res = session.update(namespace + "delete_comment", map);
+
+			if (res > 0) {
+				session.commit();
+			} else {
+				session.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return res;
+		
+	}
+	
+	public int insert_comment(comment_dto comment_dto) {
+		SqlSession session = null;
+		int res = 0;
+
+		try {
+			session = getSqlSessionFactory().openSession();
+			res = session.insert(namespace + "insert_comment", comment_dto);
+
+			if (res > 0) {
+				session.commit();
+			} else {
+				session.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return res;
+
+	}
+
 
 }

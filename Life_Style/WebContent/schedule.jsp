@@ -1,3 +1,4 @@
+<%@page import="com.life.dto.member_dto"%>
 <%@page import="com.life.dao.Util"%>
 <%@page import="com.life.dto.schedule_dto"%>
 <%@page import="com.life.biz.schedule_biz"%>
@@ -58,8 +59,8 @@
 	
 	schedule_biz biz = new schedule_biz();
 	String yyyMM = year + Util.isTwo(month + "");
-	
-	List<schedule_dto> clist = biz.getCalViewList("kh", yyyMM);
+	member_dto member_dto =  (member_dto)session.getAttribute("member_dto");
+	List<schedule_dto> clist = biz.getCalViewList(member_dto.getMember_id(), yyyMM);
 %>
 <body>
 <table id="calendar">

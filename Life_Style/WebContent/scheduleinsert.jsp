@@ -1,3 +1,4 @@
+<%@page import="com.life.dto.member_dto"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -20,6 +21,8 @@
 
 	int today_hour = cal.get(Calendar.HOUR_OF_DAY);
 	int today_min = cal.get(Calendar.MINUTE);
+	
+	member_dto member_dto = (member_dto)session.getAttribute("member_dto");
 %>
 <body>
 <h1>일정 작성하기</h1>
@@ -29,7 +32,7 @@
 		<table border="1">
 			<tr>
 				<th>ID</th>
-				<td><input type="text" name="id" value="kh" readonly="readonly"></td>
+				<td><input type="text" name="id" value="<%=member_dto.getMember_id() %>" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<th>일정</th>

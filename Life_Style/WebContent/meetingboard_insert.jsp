@@ -8,10 +8,28 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="/Life_Style03/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="/Life_Style/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <style>
 	@import url("css/mapC.css");
 </style>
+<script src='js/meetingboard.js'></script>
+<script type="text/javascript">
+
+function compare(){
+	
+	var min = $("#min").val()
+	var max = $("#max").val()
+	
+	if(max !=""){
+		if(min > max){
+			alert("값을 다시입력해주세요")
+			$("[name=board_age_max]").focus()
+			//location.href="meetingboard.do?command=insertboard"
+		}
+	}
+}
+
+</script>
 </head>
 <body>
 	<form action="meetingboard.do" method="post" name="frm">
@@ -27,41 +45,70 @@
 		<table border="1">
 			<tr>
 				<th>글쓴이</th>
-				<td><textarea rows="1" cols="100" style="resize:none" name="board_writer"></textarea></td>
+				<td><textarea rows="1" cols="119" style="resize:none" name="board_writer">${member_dto.member_id }</textarea></td>
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td><textarea rows="1" cols="100" style="resize:none" name="board_title"></textarea></td>
+				<td>
+				<select name="board_tag" style="height:21px"> 
+					<option>관심사 태그 목록</option>
+					<option value="운동">운동</option>
+					<option value="음식">음식</option>
+					<option value="음악">음악</option>
+					<option value="여행">여행</option>
+					<option value="패션">패션</option>
+					<option value="영화">영화</option>
+					<option value="뷰티">뷰티</option>
+					<option value="건강">건강</option>
+					<option value="경제">경제</option>
+				</select>
+				<textarea rows="1" cols="100" style="resize:none" name="board_title">
+				</textarea></td>
+			</tr>
+			
+			<tr>
+				<th rowspan="5">조건 선택</th>
+				<td>
+				<input type="radio" name="board_genderlimit" value="남자만">남자만
+				<input type="radio" name="board_genderlimit" value="여자만">여자만
+				<input type="radio" name="board_genderlimit" value="누구나">누구나
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+				나이제한 : <input type="text" name="board_age_min" type="number" min="0" max="200" id="min" onchange="compare()">~
+				<input type="text" name="board_age_max" type="number" min="0" max="200" id="max" onchange="compare()">
+				</td>
+			</tr>
+			<tr>
+				<td>
+				최대인원수 : <input type="number" name="board_peoplelimit" min="0" max="50">
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+				<select name="board_location" style="height:21px"> 
+					<option>지역선택</option>
+					<option value="서울">서울</option>
+					<option value="경기">경기</option>
+					<option value="충청">충청</option>
+					<option value="전라">전라</option>
+					<option value="경상">경상</option>
+					<option value="강원">강원</option>
+					<option value="제주">제주</option>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>시간제한 : 날짜입력 <input name="board_date" type="datetime-local" value="" id="now_date"></td>
 			</tr>
 			<tr>
 				<th>글내용</th>
 				<td>
-				<textarea name="board_content" id="ir1" rows="10" cols="100" style="resize:none"></textarea>
+				<textarea name="board_content" id="ir1" rows="10" cols="118" style="resize:none"></textarea>
 				</td>
-			</tr>
-			<tr>
-				<th>지역</th>
-				<td><textarea rows="1" cols="100" style="resize:none" name="board_location"></textarea></td>
-			</tr>
-			<tr>
-				<th>태그</th>
-				<td><textarea rows="1" cols="100" style="resize:none" name="board_tag"></textarea></td>
-			</tr>
-			<tr>
-				<th>성별</th>
-				<td><textarea rows="1" cols="100" style="resize:none" name="board_genderlimit"></textarea></td>
-			</tr>
-			<tr>
-				<th>최소나이</th>
-				<td><textarea rows="1" cols="100" style="resize:none" name="board_age_min"></textarea></td>
-			</tr>
-			<tr>
-				<th>최대나이</th>
-				<td><textarea rows="1" cols="100" style="resize:none" name="board_age_max"></textarea></td>
-			</tr>
-			<tr>
-				<th>인원수제한</th>
-				<td><textarea rows="1" cols="100" style="resize:none" name="board_peoplelimit"></textarea></td>
 			</tr>
 			<tr>
 				<td colspan="2">
@@ -116,18 +163,21 @@
 				</table>
 			</div>
 		</div>
-		
 	</form>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c54788c8f1925b6e8dd99b858e1c6f11&libraries=services"></script>
 <script type="text/javascript" src="js/mapS.js"></script>
 <script type="text/javascript">
-
+	onload = function(){
+		document.getElementById('now_date').value = new Date().toISOString().slice(0,16);
+	}
+</script>
+<script type="text/javascript">
 var oEditors = [];
 
 nhn.husky.EZCreator.createInIFrame({
     oAppRef: oEditors,
     elPlaceHolder: "ir1",
-    sSkinURI: "/Life_Style03/smarteditor/SmartEditor2Skin.html",
+    sSkinURI: "/Life_Style/smarteditor/SmartEditor2Skin.html",
     fCreator: "createSEditor2"
 });
 //‘저장’ 버튼을 누르는 등 저장을 위한 액션을 했을 때 submitContents가 호출된다고 가정한다.

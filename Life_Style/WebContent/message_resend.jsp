@@ -10,6 +10,7 @@
 <title>Insert title here</title>
 <%
 member_dto member_dto = (member_dto)session.getAttribute("member_dto");
+String message_receive_id = request.getParameter("message_receive_id");
 %>
 </head>
 <body>
@@ -22,7 +23,7 @@ member_dto member_dto = (member_dto)session.getAttribute("member_dto");
 		<tr>
 			<td>받는 사람</td>
 			<td>
-				<input type="text" name="message_receive_id" value="">
+				<input type="text" name="message_receive_id" value="<%=message_receive_id %>" readonly="readonly">
 			</td>
 		</tr>
 		<tr>

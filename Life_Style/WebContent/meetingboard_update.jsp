@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="/Life_Style03/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="/Life_Style/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <style>
 	@import url("css/mapC.css");
 </style>
@@ -137,7 +137,7 @@ var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
     oAppRef: oEditors,
     elPlaceHolder: "ir12",
-    sSkinURI: "/Life_Style03/smarteditor/SmartEditor2Skin.html",
+    sSkinURI: "/Life_Style/smarteditor/SmartEditor2Skin.html",
     fCreator: "createSEditor2"
 });
 
@@ -155,7 +155,5 @@ function submitContents(elClickedObj) {
     } catch(e) {}
 }
 </script>
-	
-	
 </body>
 </html>

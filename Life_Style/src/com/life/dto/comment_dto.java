@@ -52,6 +52,4 @@ public class comment_dto {
 	public void setComment_regdate(Date comment_regdate) {
 		this.comment_regdate = comment_regdate;
 	}
-	
-	
 }

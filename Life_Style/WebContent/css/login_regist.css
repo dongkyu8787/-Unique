@@ -1,0 +1,32 @@
+
+#regist {
+	border: 1px solid black;
+	background: skyblue;
+	position: absolute;
+	top: 200px;
+	width: 400px;
+	left: 500px;
+	display: none;
+}
+
+#login {
+	border: 1px solid black;
+	background: skyblue;
+	position: absolute;
+	top: 200px;
+	left: 500px;
+	display: none;
+}
+#kakao_regist{
+	border: 1px solid black;
+	background: skyblue;
+	position: absolute;
+	top: 200px;
+	left: 500px;
+	display: none;
+}
+
+#on_login{
+	display: none;
+}
+

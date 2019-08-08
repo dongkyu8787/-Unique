@@ -17,6 +17,7 @@ import org.json.simple.JSONObject;
 
 import com.life.biz.schedule_biz;
 import com.life.dao.Util;
+import com.life.dto.member_dto;
 import com.life.dto.schedule_dto;
 
 
@@ -35,6 +36,7 @@ public class schedule_controller extends HttpServlet {
 		String command = request.getParameter("command");
 		
 		schedule_biz biz = new schedule_biz();
+		member_dto member_dto = (member_dto)request.getSession().getAttribute("member_dto");
 		if(command.equals("calendar")) {
 			response.sendRedirect("schedule.jsp");
 		}
@@ -57,7 +59,7 @@ public class schedule_controller extends HttpServlet {
 			String date = request.getParameter("date");
 			String mdate = year+Util.isTwo(month)+Util.isTwo(date);
 
-			List<schedule_dto> list = biz.selectList("kh", mdate);
+			List<schedule_dto> list = biz.selectList(member_dto.getMember_id(), mdate);
 			
 			request.setAttribute("list", list);
 			dispatch("schedulelist.jsp", request, response);
@@ -85,35 +87,35 @@ public class schedule_controller extends HttpServlet {
 			dispatch("scheduleinsert.jsp", request, response);
 		}else if(command.equals("muldel")) {
 			String [] seq = request.getParameterValues("chk");
-			
+			String [] id =  {member_dto.getMember_id()};
 			String year = request.getParameter("year");
 			String month = request.getParameter("month");
 			String date = request.getParameter("date");
 			
-			biz.mulDel(seq);
+			biz.mulDel(seq, id);
 			
 			response.sendRedirect("schedule.do?command=list&year="+year+"&month="+month+"&date="+date);
 		}else if(command.equals("detail")) {
 			int schedule_no = Integer.parseInt(request.getParameter("schedule_no"));
 			
-			schedule_dto dto = biz.selectone(schedule_no);
+			schedule_dto dto = biz.selectone(schedule_no, member_dto.getMember_id());
 			request.setAttribute("schedule_dto", dto);
 			dispatch("scheduledetail.jsp", request, response);
 		}else if(command.equals("del")) {
 			int schedule_no = Integer.parseInt(request.getParameter("schedule_no"));
 			
-			biz.del(schedule_no);
+			biz.del(schedule_no, member_dto.getMember_id());
 			dispatch("schedule.do?command=list", request, response);
 		}else if(command.equals("update")) {
 			int schedule_no = Integer.parseInt(request.getParameter("schedule_no"));
 			
-			schedule_dto dto = biz.selectone(schedule_no);
+			schedule_dto dto = biz.selectone(schedule_no, member_dto.getMember_id());
 			
 			request.setAttribute("schedule_dto", dto);
 			dispatch("scheduleupdate.jsp", request, response);
 		}else if(command.equals("updateres")) {
 			int schedule_no = Integer.parseInt(request.getParameter("schedule_no"));
-			schedule_dto dto = biz.selectone(schedule_no);
+			schedule_dto dto = biz.selectone(schedule_no, member_dto.getMember_id());
 			
 			String schedule_title = request.getParameter("schedule_title");
 			String schedule_content = request.getParameter("schedule_content");

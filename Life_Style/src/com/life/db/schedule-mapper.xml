@@ -16,8 +16,8 @@
 	 	SELECT COUNT(SCHEDULE_TITLE) FROM SCHEDULE WHERE SCHEDULE_ID = #{id} AND SUBSTR(SCHEDULE_DATE, 0,8) = #{mdate}
 	 </select>
 	 
-	 <select id="selectone" resultType="schedule_dto">
-	 	SELECT * FROM SCHEDULE WHERE SCHEDULE_NO = #{schedule_no}		
+	 <select id="selectone" resultType="schedule_dto" parameterType="map">
+	 	SELECT * FROM SCHEDULE WHERE SCHEDULE_NO = #{schedule_no} AND SCHEDULE_ID = #{schedule_id}		
 	 </select>
 	 	
 	 <select id="selectlist" resultType="schedule_dto">
@@ -31,12 +31,12 @@
 	 
 	 <update id="update" parameterType="schedule_dto">
 	 	UPDATE SCHEDULE SET SCHEDULE_TITLE = #{schedule_title}, SCHEDULE_CONTENT = #{schedule_content}, SCHEDULE_DATE = #{schedule_date} 
-	 	WHERE SCHEDULE_NO = #{schedule_no}
+	 	WHERE SCHEDULE_NO = #{schedule_no} AND SCHEDULE_ID = #{schedule_id}
 	 </update>
 	 
-	 <delete id="del" parameterType="int">
+	 <delete id="del" parameterType="map">
 	 	DELETE FROM SCHEDULE
-  		WHERE SCHEDULE_NO = #{schedule_no}
+  		WHERE SCHEDULE_NO = #{schedule_no} AND SCHEDULE_ID = #{schedule_id}
 	 </delete>
 	 
 	 <delete id="muldel" parameterType="map">
@@ -46,5 +46,6 @@
   		open="(" separator="," close=")">
   			#{seq}
   		</foreach>
+  		AND SCHEDULE_ID = #{schedule_id}
   	 </delete>
 </mapper>

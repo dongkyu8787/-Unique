@@ -3,5 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.life.db.membermapper">
+
+	<select id="loginChk" parameterType="map" resultType="member_dto">
+		SELECT * FROM MEMBER WHERE MEMBER_ID = #{member_id} AND MEMBER_PW = #{member_pw}
+	</select>
+	
+	<select id="kakaologinChk" parameterType="map" resultType="member_dto">
+		SELECT * FROM MEMBER WHERE MEMBER_ID = #{member_id} AND MEMBER_EMAIL = #{member_email}
+	</select>
+	
+	<select id="idChk" parameterType="map" resultType="member_dto">
+		SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_ID =#{member_id}
+	</select>
+	 
+	<insert id="signupChk" parameterType="member_dto">
+		INSERT INTO MEMBER VALUES(MEMBER_SEQ.NEXTVAL,#{member_id},#{member_pw},#{member_name},#{member_birth},#{member_addr},#{member_phone},#{member_email},'Y',#{member_gender},#{member_interest},'USER','0')
+	</insert>
 	 
 </mapper>

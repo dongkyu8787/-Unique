@@ -1,9 +1,11 @@
 package com.life.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import com.life.dao.board_dao;
 import com.life.dto.board_dto;
+import com.life.dto.comment_dto;
 
 public class board_biz {
 	private board_dao dao = new board_dao(); 
@@ -31,9 +33,6 @@ public class board_biz {
 	public int updateviewnum(board_dto dto) {
 		return dao.updateviewnum(dto);
 	}
-	public int totalnum() {
-		return dao.totalnum();
-	}
 	
 	 public int insertAS(board_dto dto) {
 		 return dao.insertAS(dto);
@@ -42,6 +41,22 @@ public class board_biz {
 	 public int updateAS(int board_no_seq) {
 		 
 		 return dao.updateAS(board_no_seq);
+	 }
+	 
+	 public List<board_dto> searchlist(Map<String, String> map){
+		 return dao.searchlist(map);
+	 }
+	 
+	 public List<comment_dto> selectlist_comment(int board_no_seq){
+		 return dao.selectlist_comment(board_no_seq);
+	 }
+	 
+	 public int delete_comment(int comment_no_seq, String member_id) {
+		 return dao.delete_comment(comment_no_seq, member_id);
+	 }
+	 
+	 public int insert_comment(comment_dto comment_dto) {
+		 return dao.insert_comment(comment_dto);
 	 }
 	 
 	 

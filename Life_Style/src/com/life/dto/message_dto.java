@@ -3,16 +3,23 @@ package com.life.dto;
 import java.util.Date;
 
 public class message_dto {
-	private int message_no_seq;
+	private int message_no;
 	private String message_content;
 	private String message_send_id;
 	private String message_receive_id;
 	private Date message_regdate;
-	public int getMessage_no_seq() {
-		return message_no_seq;
+	private String message_read;
+	public String getMessage_read() {
+		return message_read;
 	}
-	public void setMessage_no_seq(int message_no_seq) {
-		this.message_no_seq = message_no_seq;
+	public void setMessage_read(String message_read) {
+		this.message_read = message_read;
+	}
+	public int getMessage_no() {
+		return message_no;
+	}
+	public void setMessage_no(int message_no) {
+		this.message_no = message_no;
 	}
 	public String getMessage_content() {
 		return message_content;

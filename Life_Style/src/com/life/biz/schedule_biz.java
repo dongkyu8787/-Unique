@@ -23,14 +23,14 @@ public class schedule_biz {
 	public int insertCalBoard(schedule_dto dto) {
 		return dao.insertCalBoard(dto);
 	}
-	public boolean mulDel(String[] schedule_no) {
-		return dao.mulDel(schedule_no);
+	public boolean mulDel(String[] schedule_no, String[] schedule_id) {
+		return dao.mulDel(schedule_no,schedule_id);
 	}
-	public schedule_dto selectone(int schedule_no) {
-		return dao.selectone(schedule_no);
+	public schedule_dto selectone(int schedule_no, String schedule_id) {
+		return dao.selectone(schedule_no,schedule_id);
 	}
-	public int del(int schedule_no) {
-		return dao.del(schedule_no);
+	public int del(int schedule_no,String schedule_id) {
+		return dao.del(schedule_no,schedule_id);
 	}
 
 	public int update(schedule_dto dto) {

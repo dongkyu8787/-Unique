@@ -81,11 +81,12 @@ public class schedule_dao extends schedule_sqlmap{
 		return res;
 	}
 	
-	public boolean mulDel(String[] schedule_no) {
+	public boolean mulDel(String[] schedule_no, String[] schedule_id) {
 		int count = 0;
 		Map<String,String[]> map = new HashMap<String,String[] >();
 		
 		map.put("seqs", schedule_no);
+		map.put("schedule_id",schedule_id);
 		
 		SqlSession session = null;
 		
@@ -102,24 +103,30 @@ public class schedule_dao extends schedule_sqlmap{
 		return count == schedule_no.length ? true : false;
 	}
 
-	public schedule_dto selectone(int schedule_no) {
+	public schedule_dto selectone(int schedule_no, String schedule_id) {
 		SqlSession session = null;
 		
 		session = getSqlSessionFactory().openSession(false);
 		schedule_dto dto = new schedule_dto();
+		Map<String,String> map = new HashMap<String,String>();
 		
-		dto = session.selectOne(namespace+"selectone",schedule_no);
+		map.put("schedule_no", schedule_no+"");
+		map.put("schedule_id",schedule_id);
+		dto = session.selectOne(namespace+"selectone",map);
 		
 		session.close();
 		return dto;
 	}
 
-	public int del(int schedule_no) {
+	public int del(int schedule_no, String schedule_id) {
 		
 		SqlSession session = null;
 		session = getSqlSessionFactory().openSession(false);
+		Map<String,String> map = new HashMap<String,String>();
 		
-		int res = session.delete(namespace+"del", schedule_no);
+		map.put("schedule_no", schedule_no+"");
+		map.put("schedule_id",schedule_id);
+		int res = session.delete(namespace+"del", map);
 		
 		if(res >0) {
 			session.commit();

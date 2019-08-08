@@ -4,12 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.life.db.boardmapper">
 
-	<select id="selectlist" resultType="board_dto">
+	<select id="selectlist" resultType="board_dto" parameterType="map">
 	
-	SELECT * FROM BOARD 
-	ORDER BY BOARD_GROUPNO_SEQ DESC, BOARD_GROUP_ORDER 
+		SELECT * FROM BOARD
+		
+		<choose>
+			<when test="board_title != null">
+				WHERE BOARD_TITLE LIKE '%'||#{board_title}||'%' AND BOARD_DEL = 'N'
+			</when>
+			<when test="board_content != null">
+				WHERE BOARD_CONTENT LIKE '%'||#{board_content}||'%' AND BOARD_DEL = 'N'
+			</when>
+			<when test="board_titlecontent != null">
+				WHERE BOARD_CONTENT LIKE '%'||#{board_titlecontent}||'%' OR BAORD_TITLE LIKE '%'||#{board_titlecontent}||'%' AND BOARD_DEL = 'N'
+			</when>
+			<when test="board_writer != null">
+				WHERE BOARD_WRITER LIKE '%'||#{board_writer}||'%' AND BOARD_DEL = 'N'
+			</when>
+			<when test="board_tag != null">
+				WHERE BOARD_TAG LIKE '%'||#{board_tag}||'%' AND BOARD_DEL = 'N'
+			</when>
+			<otherwise>
+						
+			</otherwise>
+		</choose>
+		ORDER BY BOARD_GROUPNO_SEQ DESC, BOARD_GROUP_ORDER
 	
 	</select>
+
 	
 	<select id="selectone" parameterType="int" resultType="board_dto">
 	SELECT * FROM BOARD
@@ -59,17 +81,10 @@
 	<update id="viewnum" parameterType="board_dto">
 	
 	UPDATE BOARD 
-	SET BOARD_VIEWNUM=#{board_viewnum}
+	SET BOARD_VIEWNUM=#{board_viewnum}+1
 	WHERE BOARD_NO_SEQ =#{board_no_seq}
 	
-	
 	</update>
-	
-	<select id="totalnum" resultType="int">
-	
-	SELECT COUNT(BOARD_NO_SEQ) FROM BOARD 
-
-	</select>
 	
 	
 	
@@ -91,7 +106,7 @@
 	#{board_age_min},
 	#{board_age_max},
 	#{board_peoplelimit},
-	TO_DATE('10-04-2010 20:37:50','MM-DD-YYYY HH24:MI:SS'),
+	TO_DATE(#{board_timelimit},'YYYY-MM-DD HH24:MI'),
 	'N')
 	
 	</insert>
@@ -101,9 +116,33 @@
 	UPDATE BOARD SET BOARD_GROUP_ORDER = BOARD_GROUP_ORDER+1
 	WHERE BOARD_GROUP_ORDER > (SELECT BOARD_GROUP_ORDER FROM BOARD WHERE BOARD_NO_SEQ=#{board_no_seq}) 
 	
-	
 	</update>
 	
+	<select id="selectlist_comment" resultType="comment_dto" parameterType="int">
 	
- 
+		SELECT * 
+		FROM COMMENT_TABLE 
+		WHERE COMMENT_BOARD_NO = #{board_no_seq}
+		ORDER BY COMMENT_NO_SEQ DESC
+	
+	</select>
+	
+	<insert id="insert_comment" parameterType="comment_dto">
+		INSERT INTO COMMENT_TABLE
+		VALUES (COMMENT_SEQ.NEXTVAL, 
+		COMMENTGROUP_SEQ.NEXTVAL, 
+		1,
+		#{comment_board_no},
+		#{comment_writer},
+		#{comment_content},
+		SYSDATE)
+	</insert>
+	
+	<delete id="delete_comment" parameterType="map">
+		
+		DELETE FROM 
+		COMMENT_TABLE 
+		WHERE COMMENT_NO_SEQ = #{comment_no_seq} AND COMMENT_WRITER = #{member_id}
+	
+	</delete>
 </mapper>
