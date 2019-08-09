@@ -1,32 +1,84 @@
 
 #regist {
-	border: 1px solid black;
-	background: skyblue;
+	background-image:url('img/form.png');
+	background-size:100% 100%;
+	background-color:white;
 	position: absolute;
+	padding-left:100px;
+	height: 750px;
+	width: 500px;
 	top: 200px;
-	width: 400px;
 	left: 500px;
 	display: none;
+	border-radius: 15px;
 }
 
 #login {
-	border: 1px solid black;
-	background: skyblue;
+	background-image:url('img/form.png');
+	background-size:100% 100%;
+	background-color:white;
 	position: absolute;
+	padding-left:100px;
+	height: 350px;
+	width: 400px;
 	top: 200px;
 	left: 500px;
 	display: none;
+	border-radius: 15px;
 }
 #kakao_regist{
-	border: 1px solid black;
-	background: skyblue;
+	background-image:url('img/form.png');
+	background-size:100% 100%;
+	background-color:white;
 	position: absolute;
+	padding-left:130px;
+	height: 700px;
+	width: 500px;
 	top: 200px;
 	left: 500px;
 	display: none;
+	border-radius: 15px;
 }
 
 #on_login{
 	display: none;
 }
 
+input[type="password"], input[type="text"]  {
+    font-family: Arial, Sans-Serif;
+    font-size: 15px;
+    color: black;
+    padding: 7px;
+    outline:none;   
+    float:left;
+    border: solid 1px #adadad;
+    width: 200px;
+    border-radius: 10px;
+    clear: right;
+}
+
+input[type="button"]{
+	padding: 6px;
+	border-radius: 10px;
+	border: solid 1px #adadad;
+	text-align: center;
+	font-size: 15px;
+	width: 100px;
+	background-color: #e9ecef;
+}
+
+#regist_logo{
+	width: 150px;
+	height: auto;
+	position:absolute;
+	left:10px;
+	top:-5px;
+}
+
+#login_logo{
+	width: 150px;
+	height: auto;
+	position:absolute;
+	left:10px;
+	top:-5px;
+}
