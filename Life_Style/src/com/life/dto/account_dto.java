@@ -3,17 +3,27 @@ package com.life.dto;
 import java.util.Date;
 
 public class account_dto {
-	private int account_io_seq;
+	private String account_id;
+	private int account_io_no;
 	private Date account_date;
 	private int account_in_cash;
 	private int account_out_cash;
 	private String account_io_content;
 	private int account_totalcash;
-	public int getAccount_io_seq() {
-		return account_io_seq;
+	private String account_days;
+	
+	
+	public String getAccount_days() {
+		return account_days;
 	}
-	public void setAccount_io_seq(int account_io_seq) {
-		this.account_io_seq = account_io_seq;
+	public void setAccount_days(String account_days) {
+		this.account_days = account_days;
+	}
+	public int getAccount_io_no() {
+		return account_io_no;
+	}
+	public void setAccount_io_no(int account_io_no) {
+		this.account_io_no = account_io_no;
 	}
 	public Date getAccount_date() {
 		return account_date;
@@ -44,6 +54,12 @@ public class account_dto {
 	}
 	public void setAccount_totalcash(int account_totalcash) {
 		this.account_totalcash = account_totalcash;
+	}
+	public String getAccount_id() {
+		return account_id;
+	}
+	public void setAccount_id(String account_id) {
+		this.account_id = account_id;
 	}
 	
 	

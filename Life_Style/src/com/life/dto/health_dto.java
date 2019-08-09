@@ -6,8 +6,17 @@ public class health_dto {
 	private String health_id;
 	private int health_weight;
 	private String health_food;
-	private int health_amount;
+	private float health_amount;
+	private float health_kcal;
 	private Date health_regdate;
+	private String health_days;
+	
+	public String getHealth_days() {
+		return health_days;
+	}
+	public void setHealth_days(String health_days) {
+		this.health_days = health_days;
+	}
 	public String getHealth_id() {
 		return health_id;
 	}
@@ -26,10 +35,11 @@ public class health_dto {
 	public void setHealth_food(String health_food) {
 		this.health_food = health_food;
 	}
-	public int getHealth_amount() {
+	
+	public float getHealth_amount() {
 		return health_amount;
 	}
-	public void setHealth_amount(int health_amount) {
+	public void setHealth_amount(float health_amount) {
 		this.health_amount = health_amount;
 	}
 	public Date getHealth_regdate() {
@@ -38,6 +48,14 @@ public class health_dto {
 	public void setHealth_regdate(Date health_regdate) {
 		this.health_regdate = health_regdate;
 	}
+	public float getHealth_kcal() {
+		return health_kcal;
+	}
+	public void setHealth_kcal(float health_kcal) {
+		this.health_kcal = health_kcal;
+	}
+	
+	
 	
 	
 }

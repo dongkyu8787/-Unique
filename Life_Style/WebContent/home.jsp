@@ -226,7 +226,6 @@
 	<script type="text/javascript">
 		window.onbeforeunload = unloadPage();
 
-
 		function unloadPage() {
 
 			var id = "" + "${member_dto.member_id}";
@@ -243,12 +242,14 @@
 		}
 	</script>
 	
-	
 	<a href="myinformation.do?command=memberinfo&id=아이디">내정보이동</a>
 	<a href="meetingboard.do?command=meetingboard&page=1">만남게시판이동</a>	
 	<a href="shopping.do?command=shop_main">쇼핑 이동</a>
 	<a href="schedule.do?command=calendar">내 스케쥴 이동</a>
 	<a href="#" onclick="open('whisper.do?command=message_box','메세지 함','width=360, height=300')">메세지 함</a>
-	<a href="http://192.168.10.5:8090/?id=${member_dto.member_id}" target="_blank">채팅 이동</a>
+	<a href="http://192.168.10.6:8090/?id=${member_dto.member_id}" target="_blank">채팅 이동</a>
+	<a href="health.do?command=health">건강 관리</a>
+	<a href="account.do?command=account">가계부</a>
+	<a href="statistics.do?command=statistics">통계</a>
 </body>
 </html>

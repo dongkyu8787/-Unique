@@ -19,7 +19,6 @@ $(function(){
     			data : 'command=cpreview&id=kh&yyyyMMdd='+yyyyMMdd,
     			dataType : "json",
     			async : false
-    			
     		}).done(function(obj){
     			const count = obj.cnt;
 				aCountView.after("<div class='cPreview'>"+count+"</div>");

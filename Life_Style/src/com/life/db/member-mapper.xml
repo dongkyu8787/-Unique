@@ -20,4 +20,21 @@
 		INSERT INTO MEMBER VALUES(MEMBER_SEQ.NEXTVAL,#{member_id},#{member_pw},#{member_name},#{member_birth},#{member_addr},#{member_phone},#{member_email},'Y',#{member_gender},#{member_interest},'USER','0')
 	</insert>
 	 
+	 <select id="selectMemberinfo" parameterType="String"
+		resultType="member_dto">
+		SELECT * FROM MEMBER WHERE MEMBER_ID=#{member_id}
+	</select>
+
+	<update id="updateMemberinfo" parameterType="member_dto">
+		UPDATE MEMBER
+		SET
+		MEMBER_PW=#{member_pw},
+		MEMBER_ADDR=#{member_addr}, MEMBER_PHONE=#{member_phone}, 
+		MEMBER_INTEREST=#{member_interest}
+		WHERE MEMBER_ID=#{member_id}
+	</update>
+	
+	<update id="dropout" parameterType="String">
+		DELETE FROM MEMBER WHERE MEMBER_ID=#{member_id}
+	</update>
 </mapper>

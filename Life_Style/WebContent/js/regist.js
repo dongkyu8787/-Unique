@@ -263,7 +263,7 @@ $(function(){
 			
 			var kakaoid = document.getElementById("kakaoid").value;
 			//alert(id);
-			var kakaopw = 'kakao5545pw'
+			var kakaopw = 'kakao5545'
 			var kakaoname = document.getElementById("kakaoname").value;
 			//alert(name);
 			var kakaobirth = document.getElementById("kakaobirth").value;
