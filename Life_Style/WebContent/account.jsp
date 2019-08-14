@@ -14,10 +14,6 @@
 		<form action="account.do?command=insertres" method="post">
 			<table>
 				<tr>
-					<th>ID</th>
-					<td><input type="text" name="id"></td>
-				</tr>
-				<tr>
 					<th>입금 금액</th>
 					<td><input type="text" name="in"></td>
 				</tr>
@@ -30,13 +26,9 @@
 					<td><input type="text" name="content"></td>
 				</tr>
 				<tr>
-					<td><input type="submit" value="입력"> <input
-						type="button" value="수정"
-						onclick="location.href='account.do?command=update'"> <input
-						type="button" value="삭제"
-						onclick="location.href='account.do?command=delete'"> <input
-						type="button" value="마이페이지"
-						onclick="location.href='myinformation.do?command=myinformation'">
+					<td>
+						<input type="submit" value="입력"> 
+						<input type="button" value="마이페이지" onclick="location.href='myinformation.do?command=myinformation'">
 					</td>
 				</tr>
 			</table>

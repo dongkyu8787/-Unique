@@ -8,59 +8,32 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<link rel="stylesheet" href="css/statistics.css">
 <body>
-<style>
-
-/*
-.chart rect {
-  fill: steelblue;
-}
-*/
-.chart .legend {
-  fill: black;
-  font: 14px sans-serif;
-  text-anchor: start;
-  font-size: 12px;
-}
-
-.chart text {
-  fill: white;
-  font: 10px sans-serif;
-  text-anchor: end;
-}
-
-.chart .label {
-  fill: black;
-  font: 14px sans-serif;
-  text-anchor: end;
-}
-
-.bar:hover {
-  fill: brown;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-
-</style>
-
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-<script type="text/javascript" src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script type="text/javascript" src="js/liquidFillGauge.js"></script>
+<script type="text/javascript" src="js/chart.js"></script>
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-    
+
 <div>
-	<input type="radio" value="days" class="statistics_radio" name="a">일간 
-	<input type="radio" value="weeks" class="statistics_radio" name="a">주간 
-	<input type="radio" value="months" class="statistics_radio" name="a">월간 
 	<input type="date" placeholder="검색" id="search_days">
 	<input type="button" value="검색" id="search_button">
 	
-	<svg class="chart"></svg>
+	<div>
+		<div id="chart1"></div>
+		<div id="chart2"></div>
+	</div>
+	<br>
+	<br>
+	<br>   
+	<div>
+		<div id="fillgauge1" >
+			<svg width="300px" height="250"></svg>
+		</div>
+		<div id="fillgauge2" >
+			<svg width="300px" height="250"></svg>
+		</div>
+	</div>
 </div>    
     <script type="text/javascript" src="js/statistics.js"></script>
 </body>

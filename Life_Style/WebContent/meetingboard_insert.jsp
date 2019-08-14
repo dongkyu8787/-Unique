@@ -20,10 +20,9 @@ function compare(){
 	var min = $("#min").val()
 	var max = $("#max").val()
 	
-	if(max !=""){
-		if(min > max){
-			alert("값을 다시입력해주세요")
-			$("[name=board_age_max]").focus()
+	if(max !="" && min != ""){
+		if(min >= max){
+			alert("범위에 맞게 설정하세요.")
 			//location.href="meetingboard.do?command=insertboard"
 		}
 	}
@@ -136,7 +135,6 @@ function compare(){
         		</div>
     		</div>
     		<div style="width: 300px">
-				<p align="right" id="addrs" style="margin: 0px">인천광역시 중구 중산동</p>
 				<table border="1">
 					<colgroup>
 						<col style="width: 150px; height: 150px;">

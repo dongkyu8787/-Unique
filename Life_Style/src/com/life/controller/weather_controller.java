@@ -40,7 +40,6 @@ public class weather_controller extends HttpServlet {
 			String Y= request.getParameter("long");
 			String date = request.getParameter("date");
 			int time = Integer.parseInt(request.getParameter("time"));
-			
 			//String url1 = "http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?serviceKey=" + serviceKey+"&base_date=" +date+"&base_time="+time+"&nx="+X+"&ny="+Y+"&_type=json";
 			String url1 = "http://api.openweathermap.org/data/2.5/forecast?lat="+X+"&lon="+Y+"&APPID="+serviceKey;
 			
@@ -53,7 +52,6 @@ public class weather_controller extends HttpServlet {
 			while((line = bf.readLine()) != null) {
 				result = result.concat(line);
 			}
-			
 			JsonParser jsonParser = new JsonParser();
 			
 			JsonElement element = jsonParser.parse(result);
@@ -64,7 +62,6 @@ public class weather_controller extends HttpServlet {
 			String res = "{";
 			//JsonObject tmp = array_list.getAsJsonObject().get("dt_txt").toString();
 			for(int i = 0; i < array_list.size(); ++i) {
-				//System.out.println(array_list.get(i).getAsJsonObject().toString());
 				dt = array_list.get(i).getAsJsonObject().get("dt_txt").toString();
 				dt = dt.replaceAll("\"", "");
 				dt = dt.replaceAll("-", "");
@@ -96,7 +93,7 @@ public class weather_controller extends HttpServlet {
 					}
 				}				
 			}
-			
+
 			PrintWriter out = response.getWriter();
 			out.println(res);
 		} 

@@ -12,14 +12,14 @@ import com.life.dto.health_dto;
 public class health_dao extends health_sqlmap {
 	private String namespace = "com.life.db.healthmapper.";
 
-	public List<health_dto> selectList() {
+	public List<health_dto> selectList(String health_id) {
 		SqlSession session = null;
 
 		List<health_dto> list = new ArrayList<health_dto>();
 
 		try {
 			session = getSqlSessionFactory().openSession(false);
-			list = session.selectList(namespace + "selectList");
+			list = session.selectList(namespace + "selectList",health_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -60,7 +60,7 @@ public class health_dao extends health_sqlmap {
 		map.put("health_max_date", health_max_date);
 		try {
 			session = getSqlSessionFactory().openSession(false);
-			list = session.selectList(namespace + "searchList" + map);
+			list = session.selectList(namespace + "searchList", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -50,16 +50,15 @@ public class account_controller extends HttpServlet {
 		  int res = biz.insert(dto, id);
 		  
 		  if(res > 0) {
-			  System.out.println("성공");
 			  dispatch(request, response, "account.do?command=account");
 		  } else {
-			  System.out.println("실패");
+			  dispatch(request, response, "account.do?command=account");
 		  }
 	  } else if(command.equals("account")) {
 		  
 		  List<account_dto> list = new ArrayList<account_dto>();
-		  
-		  list = biz.selectList();
+		  String member_id = request.getParameter("member_id");
+		  list = biz.selectList(member_id);
 		  
 		  request.setAttribute("list", list);
 		  dispatch(request, response, "account.jsp"); 

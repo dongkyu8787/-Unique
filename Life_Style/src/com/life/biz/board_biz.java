@@ -58,6 +58,21 @@ public class board_biz {
 	 public int insert_comment(comment_dto comment_dto) {
 		 return dao.insert_comment(comment_dto);
 	 }
+
+	public int attenduser(int board_no_seq, String attend_user) {
+		// TODO Auto-generated method stub
+		return dao.attenduser(board_no_seq, attend_user);
+	}
+
+	public String attenduser_select(int board_no_seq) {
+		// TODO Auto-generated method stub
+		return dao.attenduser_select(board_no_seq);
+	}
+
+	public int curselect() {
+		// TODO Auto-generated method stub
+		return dao.curselect();
+	}
 	 
 	 
 }

@@ -12,8 +12,8 @@ public class health_biz {
 		return dao.insert(dto);
 	}
 	
-	public List<health_dto> selectList() {
-		return dao.selectList();
+	public List<health_dto> selectList(String id) {
+		return dao.selectList(id);
 	}
 	
 	public List<health_dto> searchList(String health_id, String health_min_date, String health_max_date) {

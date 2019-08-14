@@ -79,14 +79,13 @@ public class account_dao extends account_sqlmap{
 		return res;
 	}
 	
-	public List<account_dto> selectList() {
-		
+	public List<account_dto> selectList(String account_id) {
 		SqlSession session = null;
 		List<account_dto> list = new ArrayList<account_dto>();
 		
 		try {
 			session = getSqlSessionFactory().openSession(false);
-			list = session.selectList(namespace+"selectList");
+			list = session.selectList(namespace+"selectList",account_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

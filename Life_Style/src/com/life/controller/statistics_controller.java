@@ -47,7 +47,6 @@ public class statistics_controller extends HttpServlet {
 			response.sendRedirect("statistics.jsp");
 		}else if(command.equals("graph")) {
 			String date = request.getParameter("date");
-			String letter = request.getParameter("letter");
 			String ss[] = date.split("-");
 			
 			int year = Integer.parseInt(ss[0]);
@@ -60,21 +59,25 @@ public class statistics_controller extends HttpServlet {
 			c.set(Calendar.MONTH, month - 1);
 			c.set(Calendar.DATE, day);
 			
-			if(letter.equals("days")) {
-				
-				System.out.println(account_week_value(c, year, month, acc_biz));
-				PrintWriter out = response.getWriter();
-				out.print(account_day_value(c, year, month, acc_biz));
-			}else if(letter.equals("weeks")) {
-				//해당 월 검색
-				//해당 월의 1일 부터 마지막일 구해서
-				//각 주의 평균값 
-				
-			}else if(letter.equals("months")) {
-				//해당 년도 검색
-				// 1월 1일부터 12월 31일까지 구해서
-				// 각 월별 평균 값
-			}
+			String data = account_day_value(c, year, month, acc_biz) + "§" + account_week_value(c, year, month, acc_biz) +
+							"§" + kcal_day_value(c, date, health_biz) + "§" + kcal_week_value(c, year, month, day, health_biz);
+			
+			PrintWriter out = response.getWriter();
+			out.print(data);
+			
+		}else if(command.equals("today")) {
+			Calendar c = Calendar.getInstance();
+
+			int year = c.get(Calendar.YEAR);
+			int month = c.get(Calendar.MONTH)+ 1;
+			int day = c.get(Calendar.DATE);
+			
+			String date = year + "-" + month + "-" + day;
+			String data = account_day_value(c, year, month, acc_biz) + "§" + account_week_value(c, year, month, acc_biz) +
+							"§" + kcal_day_value(c, date, health_biz) + "§" + kcal_week_value(c, year, month, day, health_biz);
+			
+			PrintWriter out = response.getWriter();
+			out.print(data);
 		}
 	}
 
@@ -124,7 +127,7 @@ public class statistics_controller extends HttpServlet {
 	}
 	
 	public String account_week_value(Calendar c, int year, int month, account_biz acc_biz) {
-		int month_startday = c.getMinimum(Calendar.DATE);
+		int month_startday = 1;
 		int month_endday = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 		c.set(Calendar.DATE, month_endday);
 		
@@ -192,5 +195,43 @@ public class statistics_controller extends HttpServlet {
 		}
 		
 		return "";
+	}
+
+	public String kcal_day_value(Calendar c, String date, health_biz health_biz) {
+		List<health_dto> health_list = health_biz.searchList("kakao@진수"/*member_dto.getMember_id()*/, date, date);
+		
+		String data = "";
+		
+		for(health_dto dto : health_list) {
+			data = Float.toString(dto.getHealth_kcal());
+		}
+		
+		return data;
+	}
+	
+	public String kcal_week_value(Calendar c, int year, int month, int day, health_biz health_biz) {
+		String data = "";
+		
+		int sunday = 0;
+		int saturday = 0;
+		
+		if(1 == c.get(Calendar.WEEK_OF_MONTH)) {
+			sunday = 1;
+			saturday = day + (7 - c.get(Calendar.DAY_OF_WEEK));
+		}else {
+			sunday = Math.abs(day - (c.get(Calendar.DAY_OF_WEEK) -1));
+			saturday = day + (7 - c.get(Calendar.DAY_OF_WEEK));
+		}
+		
+		String day_min_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(sunday+"");
+		String day_max_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(saturday+"");
+		
+		List<health_dto> health_week = health_biz.searchList("kakao@진수"/*member_dto.getMember_id()*/, day_min_date, day_max_date);
+		float kcal = 0.f;
+		for(health_dto dto: health_week) {
+			kcal += dto.getHealth_kcal();
+		} 
+		data = Float.toString(kcal);
+		return data;
 	}
 }

@@ -8,8 +8,8 @@ import com.life.dto.account_dto;
 public class account_biz {
 	private account_dao dao = new account_dao();
 	
-	public List<account_dto> selectList() {
-		return dao.selectList();
+	public List<account_dto> selectList(String member_id) {
+		return dao.selectList(member_id);
 	}
 	
 	public int insert(account_dto dto, String account_id) {

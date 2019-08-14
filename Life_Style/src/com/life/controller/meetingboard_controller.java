@@ -18,12 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.life.biz.board_biz;
 import com.life.biz.map_biz;
+import com.life.biz.schedule_biz;
 import com.life.biz.weather_biz;
 import com.life.dao.Paging;
 import com.life.dto.board_dto;
 import com.life.dto.comment_dto;
 import com.life.dto.map_dto;
 import com.life.dto.member_dto;
+import com.life.dto.schedule_dto;
 import com.life.dto.weather_dto;
 
 @WebServlet("/meetingboard.do")
@@ -46,14 +48,12 @@ public class meetingboard_controller extends HttpServlet {
 		board_biz board_biz = new board_biz();
 		map_biz map_biz = new map_biz();
 		weather_biz weather_biz = new weather_biz();
+		schedule_biz schedule_biz = new schedule_biz(); 
 		member_dto member_dto = (member_dto)request.getSession().getAttribute("member_dto");
 		if (command.equals("meetingboard")) {
 			
 			String search = request.getParameter("search");
 			String searchtxt = request.getParameter("searchtxt");
-			
-			System.out.println(search);
-			System.out.println(searchtxt);
 			
 			Map<String, String> board_map = new HashMap<String, String>();
 			board_map.put(search, searchtxt);
@@ -81,7 +81,6 @@ public class meetingboard_controller extends HttpServlet {
 			paging.setStartpage();
 			paging.setEndpage();
 			
-			
 			request.setAttribute("paging", paging);
 			
 			dispatch(request, response, "meetingboard.jsp");
@@ -93,8 +92,6 @@ public class meetingboard_controller extends HttpServlet {
 			
 			List<comment_dto> comment_list = board_biz.selectlist_comment(board_no_seq);
 			
-
-			
 			map_dto map_dto = map_biz.selectOne(board_no_seq);
 			weather_dto weather_dto = weather_biz.selectOne(board_no_seq);
 
@@ -105,7 +102,12 @@ public class meetingboard_controller extends HttpServlet {
 			board_biz.updateviewnum(dto_viewnum);
 
 			board_dto board_dto = board_biz.selectone(board_no_seq);
-
+			String [] ss = null;
+			if(board_dto.getBoard_attend_user() != null) {
+				ss = board_dto.getBoard_attend_user().split("/");
+				request.setAttribute("attend", ss);
+			}
+				
 			request.setAttribute("board_dto", board_dto);
 			request.setAttribute("map_dto", map_dto);
 			request.setAttribute("weather_dto", weather_dto);
@@ -124,11 +126,28 @@ public class meetingboard_controller extends HttpServlet {
 			dispatch(request, response, "meetingboard_update.jsp");
 
 		} else if (command.equals("meetingupdateres")) {
+			
+			String board_date = request.getParameter("board_date");
+			String time_date = board_date.replace("T", " ");
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date board_timelimit = null;
+			try {
+				board_timelimit = sdf.parse(time_date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
 			int board_no_seq = Integer.parseInt(request.getParameter("board_no_seq"));
+			String board_writer = request.getParameter("board_writer");
 			String board_title = request.getParameter("board_title");
 			String board_content = request.getParameter("board_content");
 			String board_location = request.getParameter("board_location");
 			String board_tag = request.getParameter("board_tag");
+			String board_genderlimit = request.getParameter("board_genderlimit");
+			int board_age_min = Integer.parseInt(request.getParameter("board_age_min"));
+			int board_age_max = Integer.parseInt(request.getParameter("board_age_max"));
+			int board_peoplelimit = Integer.parseInt(request.getParameter("board_peoplelimit"));
 
 			double map_lng = Double.parseDouble(request.getParameter("lng"));
 			double map_lat = Double.parseDouble(request.getParameter("lat"));
@@ -144,10 +163,16 @@ public class meetingboard_controller extends HttpServlet {
 			board_dto boardres_dto = new board_dto();
 
 			boardres_dto.setBoard_no_seq(board_no_seq);
+			boardres_dto.setBoard_writer(board_writer);
 			boardres_dto.setBoard_title(board_title);
 			boardres_dto.setBoard_content(board_content);
 			boardres_dto.setBoard_location(board_location);
 			boardres_dto.setBoard_tag(board_tag);
+			boardres_dto.setBoard_genderlimit(board_genderlimit);
+			boardres_dto.setBoard_age_min(board_age_min);
+			boardres_dto.setBoard_age_max(board_age_max);
+			boardres_dto.setBoard_peoplelimit(board_peoplelimit);
+			boardres_dto.setBoard_timelimit(board_timelimit);
 //--------------------map-----------------------------------
 			map_dto map_dto = new map_dto();
 
@@ -164,12 +189,13 @@ public class meetingboard_controller extends HttpServlet {
 			weather_dto.setWeather_tmx(weather_tmx);
 			weather_dto.setWeather_t3h(weather_t3h);
 			weather_dto.setWeather_sky(weather_sky);
-
-			if ((weather_biz.update(weather_dto) > 0) && (map_biz.update(map_dto) > 0)
-					&& (board_biz.update(boardres_dto) > 0)) {
-				alert(request, response, "게시글이 업데이트되었습니다.");
-			} else {
-				alert(request, response, "업데이트가 실패하였습니다.");
+			weather_dto.setWeather_board_no(board_no_seq);
+			
+			if ((weather_biz.update(weather_dto) > 0) && (map_biz.update(map_dto) > 0) &&
+			(board_biz.update(boardres_dto) > 0)) {
+				response.sendRedirect("meetingboard.do?command=meetingboard&page=1");
+			}else {
+				response.sendRedirect("meetingboard.do?command=meetingboard&page=1");
 			}
 		} else if (command.equals("meetingdelete")) {
 
@@ -177,9 +203,9 @@ public class meetingboard_controller extends HttpServlet {
 
 			if ((board_biz.delete(board_no_seq) > 0) && (map_biz.delete(board_no_seq) > 0)
 					&& (weather_biz.delete(board_no_seq) > 0)) {
-				alert(request, response, "게시글이 삭제되었습니다.");
+				response.sendRedirect("meetingboard.do?command=meetingboard&page=1");
 			} else {
-				alert(request, response, "삭제가 실패하였습니다.");
+				response.sendRedirect("meetingboard.do?command=meetingboard&page=1");
 			}
 
 		} else if (command.equals("insertboard")) {
@@ -249,9 +275,11 @@ public class meetingboard_controller extends HttpServlet {
 
 			if ((board_biz.insert(boardinsert_dto) > 0) && (map_biz.insert(map_dto) > 0)
 					&& (weather_biz.insert(weather_dto) > 0)) {
-				alert(request, response, "새글이 게시되었습니다.");
+				//int board_no_seq = board_biz.curselect();
+				//schedule_biz.insertBoard(board_no_seq, board_writer);
+				response.sendRedirect("meetingboard.do?command=meetingboard&page=1");
 			} else {
-				alert(request, response, "새글 작성이 실패하였습니다.");
+				response.sendRedirect("meetingboard.do?command=meetingboard&page=1");
 			}
 		} else if (command.equals("insertAS")) {
 			int board_no_seq = Integer.parseInt(request.getParameter("board_no_seq"));
@@ -260,8 +288,7 @@ public class meetingboard_controller extends HttpServlet {
 
 			request.setAttribute("insertAS_dto", insertAS_dto);
 
-			RequestDispatcher dispatch = request.getRequestDispatcher("meetingboard_insertAS.jsp");
-			dispatch.forward(request, response);
+			dispatch(request, response, "meetingboard_insertAS.jsp");
 
 		} else if (command.equals("insertASres")) {
 
@@ -281,9 +308,9 @@ public class meetingboard_controller extends HttpServlet {
 			board_biz.updateAS(board_no_seq);
 
 			if (board_biz.insertAS(insertASres_dto) > 0) {
-				alert(request, response, "답글이 게시되었습니다.");
+				response.sendRedirect("meetingboard.do?command=meetingboard&page=1");
 			} else {
-				alert(request, response, "답글 작성이 실패하였습니다.");
+				response.sendRedirect("meetingboard.do?command=meetingboard&page=1");
 			}
 
 		} else if(command.equals("comment_insert")) {
@@ -302,10 +329,8 @@ public class meetingboard_controller extends HttpServlet {
 			if (board_biz.insert_comment(comment_dto) > 0) {
 				response.sendRedirect("meetingboard.do?command=selectone&board_no_seq="+board_no_seq+"&board_viewnum="+board_viewnum);
 			} else {
-				alert(request, response, "댓글 작성이 실패하였습니다.");
+				response.sendRedirect("meetingboard.do?command=selectone&board_no_seq="+board_no_seq+"&board_viewnum="+board_viewnum);
 			}
-			
-			
 			
 		} else if(command.equals("comment_delete")) {
 			
@@ -316,7 +341,31 @@ public class meetingboard_controller extends HttpServlet {
 			if (board_biz.delete_comment(comment_no_seq,member_dto.getMember_id()) > 0) {
 				response.sendRedirect("meetingboard.do?command=selectone&board_no_seq="+board_no_seq+"&board_viewnum="+board_viewnum);
 			} else {
-				alert(request, response, "댓글 삭제가 실패하였습니다.");
+				response.sendRedirect("meetingboard.do?command=selectone&board_no_seq="+board_no_seq+"&board_viewnum="+board_viewnum);
+			}
+		}else if(command.equals("attendupdate")) {
+			int board_no_seq = 0;
+			if(request.getParameter("board_no_seq") != null)
+				board_no_seq = Integer.parseInt(request.getParameter("board_no_seq"));
+			
+			int board_viewnum = 0;
+			if(request.getParameter("board_viewnum") != null)
+				board_viewnum = Integer.parseInt(request.getParameter("board_viewnum"));
+			String uu = board_biz.attenduser_select(board_no_seq);
+			String attend_user = "";
+			if(uu == null)
+				attend_user = request.getParameter("attend_user")+"/";
+			else
+				attend_user = board_biz.attenduser_select(board_no_seq) + request.getParameter("attend_user")+"/";
+			
+			int res = board_biz.attenduser(board_no_seq, attend_user);
+						
+			int res2 = schedule_biz.insertBoard(board_no_seq, request.getParameter("attend_user"));
+			
+			if(res > 0) {
+				response.sendRedirect("meetingboard.do?command=selectone&board_no_seq="+board_no_seq+"&board_viewnum="+board_viewnum);
+			}else {
+				response.sendRedirect("meetingboard.do?command=selectone&board_no_seq="+board_no_seq+"&board_viewnum="+board_viewnum);
 			}
 		}
 	}

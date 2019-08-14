@@ -20,7 +20,14 @@ public class board_dto {
 	private int board_peoplelimit;
 	private Date board_timelimit;
 	private String board_del;
+	private String board_attend_user;
 	
+	public String getBoard_attend_user() {
+		return board_attend_user;
+	}
+	public void setBoard_attend_user(String board_attend_user) {
+		this.board_attend_user = board_attend_user;
+	}
 	public String getBoard_del() {
 		return board_del;
 	}

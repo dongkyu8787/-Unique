@@ -50,10 +50,8 @@ public class board_dao extends board_sqlmap {
 	}
 
 	public int update(board_dto dto) {
-
 		SqlSession session = null;
 		int res = 0;
-
 		try {
 			session = getSqlSessionFactory().openSession();
 			res = session.update(namespace + "update", dto);
@@ -282,6 +280,66 @@ public class board_dao extends board_sqlmap {
 
 		return res;
 
+	}
+
+	public int attenduser(int board_no_seq, String attend_user) {
+		// TODO Auto-generated method stub
+		SqlSession session = null;
+		int res = 0;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("board_no_seq", board_no_seq+"");
+		map.put("attend_user", attend_user);
+
+		try {
+			session = getSqlSessionFactory().openSession();
+			res = session.update(namespace + "attenduser", map);
+
+			if (res > 0) {
+				session.commit();
+			} else {
+				session.rollback();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return res;
+	}
+
+	public String attenduser_select(int board_no_seq) {
+		SqlSession session = null;
+		
+		String res = "";
+		try {
+			session = getSqlSessionFactory().openSession();
+			res = session.selectOne(namespace + "attendselect",board_no_seq);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		
+		return res;
+	}
+
+	public int curselect() {
+		SqlSession session = null;
+		
+		int res = 0;
+		try {
+			session = getSqlSessionFactory().openSession();
+			res = session.selectOne(namespace + "curselect");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return res;
 	}
 
 

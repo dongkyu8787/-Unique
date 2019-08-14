@@ -2,25 +2,33 @@
     pageEncoding="UTF-8"%>
     <% request.setCharacterEncoding("UTF-8");%>
     <% response.setContentType("text/html; charset=UTF-8");%>
- 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style type="text/css">
+#pop_up{
+	border: 1px;
+	font-size : 12px;
+	width: 80px;
+	height: 47px;
+	background-color: rgb(199, 202, 202);
+	display: none;
+}
+#pop_up span{
+	margin: 2px;
+	cursor: pointer;
+}
+</style>
 <body>
 <form action="meetingboard.do?">
 	<input type="hidden" name="command" value="comment_insert">
 	<input type="hidden" name="board_no_seq" value="${board_dto.board_no_seq }">
 	<table border="1">
-		<tr>
-			<th>글번호</th>
-			<td style="width:700px; height:20px">${board_dto.board_no_seq }</td>
-		</tr>
 		<tr>
 			<th>글쓴이</th>
 			<td style="width:700px; height:20px">${board_dto.board_writer }</td>
@@ -52,16 +60,30 @@
 		
 		<tr>
 			<th>제목</th>
-			<td style="width:700px; height:20px">${board_dto.board_title }</td>
+			<td style="width:700px; height:20px">${board_dto.board_title }　　　　　　　　　　　　　　　　　　　　　　　　　<fmt:formatDate value="${board_dto.board_regdate}" pattern="yyyy-MM-dd"/></td>
 		</tr>
 		<tr>
 			<th>글내용</th>
-			<td width="300px" height="150px">${board_dto.board_content }</td>
-		</tr>
-		<tr>
-			<th>글작성일</th>
-			<td style="width:700px; height:20px"><fmt:formatDate value="${board_dto.board_regdate}" pattern="yyyy-MM-dd"/></td>
-			
+			<td width="300px" height="150px">
+				${board_dto.board_content }
+				<hr>
+				<span id="attend">
+					<b>참여자</b><br>
+					<c:choose>
+						<c:when test="${empty attend } ">
+							<span>참여자가 없습니다.</span>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${attend }" var="att">
+								<span class="attends">${att }</span> 
+								<br>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</span>
+				
+				<input type="button" value="참여하기" onclick="attenduser('${member_dto.member_id}','${board_dto.board_no_seq }','${board_dto.board_viewnum }','${board_dto.board_peoplelimit }')">
+			</td>
 		</tr>
 		<tr>
 			<th>모임장소</th>
@@ -92,9 +114,11 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<input type="button" value="수정" onclick="location.href='meetingboard.do?command=meetingupdate&board_no_seq=${board_dto.board_no_seq}'">
+				<c:if test="${member_dto.member_id eq board_dto.board_writer}">
+					<input type="button" value="수정" onclick="location.href='meetingboard.do?command=meetingupdate&board_no_seq=${board_dto.board_no_seq}'">
+					<input type="button" value="삭제" onclick="location.href='meetingboard.do?command=meetingdelete&board_no_seq=${board_dto.board_no_seq}'">
+				</c:if>
 				<input type="button" value="답글작성" onclick="location.href='meetingboard.do?command=insertAS&board_no_seq=${board_dto.board_no_seq}'">
-				<input type="button" value="삭제" onclick="location.href='meetingboard.do?command=meetingdelete&board_no_seq=${board_dto.board_no_seq}'">
 				<input type="button" value="홈으로이동" onclick="location.href='home.jsp'">
 			</td>
 		</tr>
@@ -112,7 +136,7 @@
 	<table>
 		<c:forEach items="${comment_list }" var="comment_dto">
 			<tr>
-				<td style="font-size:12px; font-weight:bold">${comment_dto.comment_writer }</td>
+				<td style="font-size:12px; font-weight:bold" class="attends">${comment_dto.comment_writer }</td>
 				<td>${comment_dto.comment_content }</td>
 				<td style="font-size:10px"><fmt:formatDate value="${comment_dto.comment_regdate }" pattern="yyyy-MM-dd HH:mm"/></td>
 				<td><input type="button" value="삭제" onclick="location.href='meetingboard.do?command=comment_delete&comment_no_seq=${comment_dto.comment_no_seq}&board_no_seq=${board_dto.board_no_seq }&board_viewnum=${board_dto.board_viewnum}'">
@@ -120,8 +144,14 @@
 		</c:forEach>	
 	</table>
 </form>	
-	
+
+<div id="pop_up">
+	<span id="add_friend" >친구 추가</span><hr>
+	<span id="send_message">쪽지 보내기</span>
+</div>
+<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c54788c8f1925b6e8dd99b858e1c6f11&libraries=services"></script>
+<script type="text/javascript" src="js/meetingboard_select.js"></script>
 <script type="text/javascript">
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 

@@ -165,13 +165,8 @@
 		<tr>
 			<td>메뉴5</td>
 		</tr>
-		
-	
-	
 	</table>
-
 </div>
-
 
 <form action="myinformation.do" method="get">
 

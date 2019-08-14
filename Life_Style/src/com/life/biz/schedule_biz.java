@@ -36,4 +36,9 @@ public class schedule_biz {
 	public int update(schedule_dto dto) {
 		return dao.update(dto);
 	}
+
+	public int insertBoard(int board_no_seq,String schedule_id) {
+		// TODO Auto-generated method stub
+		return dao.insertBoard(board_no_seq, schedule_id);
+	}
 }

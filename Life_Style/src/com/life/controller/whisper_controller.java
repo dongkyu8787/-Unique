@@ -47,7 +47,6 @@ public class whisper_controller extends HttpServlet {
 			dispatch("message_selectone.jsp", request, response);
 		}else if(command.equals("resend")) {
 			String message_receive_id = request.getParameter("message_receive_id");
-			System.out.println(message_receive_id);
 			
 			response.sendRedirect("message_resend.jsp?message_receive_id="+URLEncoder.encode(message_receive_id,"UTF-8"));
 				
@@ -79,7 +78,7 @@ public class whisper_controller extends HttpServlet {
 			String [] seq = request.getParameterValues("chk");
 			String [] message_receive_id = {member_dto.getMember_id()};
 			message_biz.muldel(seq, message_receive_id);
-						
+
 			response.sendRedirect("whisper.do?command=message_box");
 		}
 	}

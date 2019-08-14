@@ -51,7 +51,6 @@ public class signup_controller extends HttpServlet {
 			member_dto.setMember_interest(interest);
 
 			int res = biz.signupChk(member_dto);
-			System.out.println(res);
 			
 			if(res==1) {
 				PrintWriter out = response.getWriter();
@@ -97,7 +96,6 @@ public class signup_controller extends HttpServlet {
 			member_dto.setMember_interest(interest);
 
 			int res = biz.signupChk(member_dto);
-			System.out.println(res);
 			
 			if(res==1) {
 				PrintWriter out = response.getWriter();

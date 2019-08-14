@@ -13,9 +13,12 @@
 
 	<insert id="insert" parameterType="health_dto">
 
-		INSERT INTO HEALTH(HEALTH_ID, HEALTH_WEIGHT, HEALTH_FOOD, HEALTH_KCAL,
-		HEALTH_AMOUNT, HEALTH_REGDATE, HEALTH_DAYS)
-		VALUES(#{health_id}, #{health_weight}, #{health_food}, #{health_kcal}, #{health_amount}, SYSDATE, #{health_days})
+		INSERT INTO
+		HEALTH(HEALTH_ID, HEALTH_WEIGHT, HEALTH_FOOD, HEALTH_KCAL, HEALTH_AMOUNT, HEALTH_REGDATE, HEALTH_DAYS)
+		SELECT #{health_id}, #{health_weight}, #{health_food},
+		#{health_kcal}, #{health_amount}, SYSDATE, #{health_days}
+		FROM MEMBER
+		WHERE MEMBER_ID = #{health_id}
 
 	</insert>
 

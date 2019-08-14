@@ -147,6 +147,22 @@ public class schedule_dao extends schedule_sqlmap{
 			session.commit();
 		else
 			session.rollback();
-		return 0;
+		return res;
+	}
+
+	public int insertBoard(int board_no_seq, String schedule_id) {
+		SqlSession session = null;
+		session = getSqlSessionFactory().openSession();
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("board_no_seq", board_no_seq+"");
+		map.put("schedule_id", schedule_id);
+		int res = session.insert(namespace+"insertboard",map);
+		
+		if(res > 0)
+			session.commit();
+		else
+			session.rollback();
+		
+		return res;
 	}
 }

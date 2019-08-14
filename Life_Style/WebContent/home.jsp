@@ -39,34 +39,33 @@
 	</div>
 	
 	<div id="login">
-	<p><img id="login_logo" src="img/logo2.png"></p>
-			<table cellspacing="10">
-				</br></br></br>
-				<caption>로 그 인</caption>
-				<tr>
-					<td>아이디</td>
-					<td><input type="text" name="id" />
-				</tr>
-				<tr>
-					<td>패스워드</td>
-					<td><input type="password" name="pw" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="button" value="로그인" id="loginajax"/> 
-						<input type="button" value="취소" onclick="closeWin()">
-					</td>
-				</tr>
-			</table>
-		<div>
-			&nbsp;&nbsp;&emsp;&emsp;<a id="kakao-login-btn"></a> 
-		</div>
+		<table>
+			<caption>로 그 인</caption>
+			<tr>
+				<td>아이디</td>
+				<td><input type="text" name="id" />
+			</tr>
+			<tr>
+				<td>패스워드</td>
+				<td><input type="password" name="pw" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="button" value="로그인" id="loginajax"/> 
+					<input type="button" value="취소" onclick="closeWin()">
+				</td>
+			</tr>
+		</table>
+			<div>
+				<a id="kakao-login-btn"></a> 
+				<a href="http://developers.kakao.com/logout"></a>
+			</div>
 	</div>
 	
 	<div id="kakao_regist">
-		<p><img id="regist_logo" src="img/logo2.png"></p>
+		<form action="signup.do" method="post">
 			<input type="hidden" name="command" value="regist" />
-			<table cellspacing="10"><br/><br/><br/> 			
+			<table>
 				<caption>회원가입</caption>
 				<tr>
 					<td>아 이 디</td>
@@ -79,19 +78,19 @@
 					<td><input type="text" name="name" id="kakaoname" placeholder="한글만"/></td>
 				</tr>
 				<tr>
-					<td>생년월일</td>
+					<td>생 년 월 일</td>
 					<td><input type="text" name="birth" id="kakaobirth" style="width:60%;" placeholder="주민번호 앞 6자리"/></td>
 				</tr>
 				<tr>
 					<td>주 소</td>
 					<td>
-						<input type="text" name="addr" id="kakaoaddr1" readonly="readonly" style="width:30%;"  /> &nbsp;
+						<input type="text" name="addr" id="kakaoaddr1" readonly="readonly" style="width:30%;"  /> 
 						<input type="button" id="kakaofindaddr" value="주소 찾기" /><br/>
 						<input type="text" name="addr" id="kakaoaddr2" readonly="readonly" style="width:80%;"/>
 					</td>
 				</tr>
 				<tr>
-					<td>상세주소</td>
+					<td>상세 주소</td>
 					<td>
 						<input type="text" name="addr" id="kakaoaddr3" style="width:80%;"/>
 					</td>
@@ -103,7 +102,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>이메일</td>
+					<td>본인 확인 이메일</td>
 					<td><input type="text" name="email" id="kakaoemail" value="" readonly="readonly"></td>
 				</tr>
 				<tr>
@@ -114,7 +113,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>관심분야</td>
+					<td>관 심 분 야</td>
 					<td>
 						<input type="checkbox" name="kakaointerest" value="운동" />운동 
 						<input type="checkbox" name="kakaointerest" value="음식" />음식 
@@ -130,29 +129,28 @@
 				<tr>
 				<tr>
 					<td colspan="2" align="center">
-						<input type="button" value="가입하기" id="kakaosignupajax" /> &nbsp;&nbsp;
+						<input type="button" value="가입하기" id="kakaosignupajax" /> 
 						<input type="button" value="취소"  onclick="kakao_closeWin()" />
 					</td>
 				</tr>
-		</table>
+			</table>
+		</form>
 	</div>
-
 	
 	<div id="regist">
-		<p><img id="regist_logo" src="img/logo2.png"></p>
+		<form action="signup.do" method="post">
 			<input type="hidden" name="command" value="regist" />
-			<table cellspacing="10">
-				</br></br>
-				<caption>회 원 가 입</caption></br>
+			<table>
+				<caption>회원가입</caption>
 				<tr>
-					<td>아이디</td>
+					<td>아 이 디</td>
 					<td>
-						<input type="text" name="id" id="originid" placeholder="영어,숫자 4~8글자"/>&nbsp;
+						<input type="text" name="id" id="originid" placeholder="영어,숫자 4~8글자"/> 
 						<input type="button" value="중복체크" id="idbutton" />
 					</td>
 				</tr>
 				<tr>
-					<td>패스워드</td>
+					<td>패 스 워 드</td>
 					<td><input type="password" name="pw" id="originpw" placeholder="영문,숫자,특문 6~10글자 "/></td>
 				</tr>
 				<tr>
@@ -160,19 +158,19 @@
 					<td><input type="text" name="name" id="originname" placeholder="한글만"/></td>
 				</tr>
 				<tr>
-					<td>생년월일</td>
+					<td>생 년 월 일</td>
 					<td><input type="text" name="birth" id="originbirth" style="width:60%;" placeholder="주민번호 앞 6자리"/></td>
 				</tr>
 				<tr>
 					<td>주 소</td>
 					<td>
-						<input type="text" name="addr" id="originaddr1" readonly="readonly" style="width:30%;"  />&nbsp;
+						<input type="text" name="addr" id="originaddr1" readonly="readonly" style="width:30%;"  /> 
 						<input type="button" id="originfindaddr" value="주소 찾기" /><br/>
 						<input type="text" name="addr" id="originaddr2" readonly="readonly" style="width:80%;"/>
 					</td>
 				</tr>
 				<tr>
-					<td>상세주소</td>
+					<td>상세 주소</td>
 					<td>
 						<input type="text" name="addr" id="originaddr3" style="width:80%;"/>
 					</td>
@@ -186,9 +184,9 @@
 				<tr>
 					<td>이메일</td>
 					<td>
-						<input type="text" name="email" id="originemail"/>&nbsp;
+						<input type="text" name="email" id="originemail"/>
 						<input type="button" value="이메일 인증" id="emailchk"/><br/> 
-						<input type="text" placeholder="인증 번호" id="userwriternum"/>&nbsp;
+						<input type="text" placeholder="인증 번호" id="userwriternum"/>
 						<input type="button" value="인 증"  id="ranchk" onclick="randomchk()" />
 					</td>
 				</tr>
@@ -200,7 +198,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>관심분야</td>
+					<td>관 심 분 야</td>
 					<td>
 						<input type="checkbox" name="origininterest" value="운동" />운동 
 						<input type="checkbox" name="origininterest" value="음식" />음식 
@@ -215,11 +213,12 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<input type="button" value="가입하기" id="signupajax" />&nbsp;&nbsp;
+						<input type="button" value="가입하기" id="signupajax" /> 
 						<input type="button" value="취소" onclick="closeWin()" />
 					</td>
 				</tr>
 			</table>
+		</form>
 	</div>
 	
 	
@@ -248,9 +247,10 @@
 	<a href="shopping.do?command=shop_main">쇼핑 이동</a>
 	<a href="schedule.do?command=calendar">내 스케쥴 이동</a>
 	<a href="#" onclick="open('whisper.do?command=message_box','메세지 함','width=360, height=300')">메세지 함</a>
-	<a href="http://192.168.10.6:8090/?id=${member_dto.member_id}" target="_blank">채팅 이동</a>
-	<a href="health.do?command=health">건강 관리</a>
-	<a href="account.do?command=account">가계부</a>
+	<a href="#" onclick="open('http://192.168.10.6:8090/?id=${member_dto.member_id}','채팅창','width=500, height=700')">채팅 이동</a>
+	<a href="health.do?command=health&member_id=${member_dto.member_id }">건강 관리</a>
+	<a href="account.do?command=account&member_id=${member_dto.member_id }">가계부</a>
 	<a href="statistics.do?command=statistics">통계</a>
+	<a href="" onclick="open('friend.do?command=friend_box','메세지 함','width=360, height=300')">친구 목록</a>
 </body>
 </html>
