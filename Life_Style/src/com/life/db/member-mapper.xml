@@ -8,6 +8,14 @@
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{member_id} AND MEMBER_PW = #{member_pw}
 	</select>
 	
+	<select id="searchid" parameterType="map" resultType="member_dto">
+		SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_EMAIL=#{member_email}
+	</select>
+	
+	<select id="searchpw" parameterType="map" resultType="member_dto">
+		SELECT MEMBER_PW FROM MEMBER WHERE MEMBER_ID=#{member_id} AND MEMBER_EMAIL=#{member_email}
+	</select>
+	
 	<select id="kakaologinChk" parameterType="map" resultType="member_dto">
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{member_id} AND MEMBER_EMAIL = #{member_email}
 	</select>
@@ -34,7 +42,7 @@
 		WHERE MEMBER_ID=#{member_id}
 	</update>
 	
-	<update id="dropout" parameterType="String">
+	<delete id="dropout" parameterType="String">
 		DELETE FROM MEMBER WHERE MEMBER_ID=#{member_id}
-	</update>
+	</delete>
 </mapper>

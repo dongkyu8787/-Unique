@@ -4,12 +4,9 @@
     pageEncoding="UTF-8"%>
     <% request.setCharacterEncoding("UTF-8");%>
     <% response.setContentType("text/html; charset=UTF-8");%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+    <%@ include file="inc/head.jsp" %>
+    
+<section id="schedule-insert">
 <%
 	int year = Integer.parseInt(request.getParameter("year"));
 	int month = Integer.parseInt(request.getParameter("month"));
@@ -24,7 +21,7 @@
 	
 	member_dto member_dto = (member_dto)session.getAttribute("member_dto");
 %>
-<body>
+
 <h1>일정 작성하기</h1>
 	<form action="schedule.do" method="post">
 		<input type="hidden" name="command" value="insertcal">
@@ -77,5 +74,10 @@
 			</tr>
 		</table>
 	</form>
-</body>
-</html>
+</section>
+<script>
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-schedule.png');");
+});
+</script>
+<%@ include file="inc/tail.jsp" %>

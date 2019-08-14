@@ -3,40 +3,39 @@
 <% request.setCharacterEncoding("UTF-8");%>
 <% response.setContentType("text/html; charset=UTF-8");%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<div>
+<%@ include file="inc/head.jsp" %>
+
+<section id="account">
+		<div id="updiv">
 		<form action="account.do?command=insertres" method="post">
 			<table>
+				
 				<tr>
-					<th>입금 금액</th>
-					<td><input type="text" name="in"></td>
+					<th>입금 금액 : 
+					<input type="text" name="in" placeholder=" 입금 금액 ">
+					</th>
 				</tr>
 				<tr>
-					<th>출금 금액</th>
-					<td><input type="text" name="out"></td>
+					<th>출금 금액 : 
+					<input type="text" name="out" placeholder=" 출금 금액 ">
+					</th>
 				</tr>
 				<tr>
-					<th>입출금 내용</th>
-					<td><input type="text" name="content"></td>
+					<th>입출금 내용 : 
+					<input type="text" name="content" placeholder=" 입출금 내용 ">
+					</th>
 				</tr>
 				<tr>
-					<td>
-						<input type="submit" value="입력"> 
-						<input type="button" value="마이페이지" onclick="location.href='myinformation.do?command=myinformation'">
+					<td><input type="submit" value="입력"> 
+					<input type="button" value="마이페이지" onclick="location.href='myinformation.do?command=myinformation'">
 					</td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<div>
+	<div id="downdiv">
 		<h1>가계부</h1>
-		<table border="1">
+		<table border="1" >
 			<col width="100">
 			<col width="100">
 			<col width="400">
@@ -72,5 +71,10 @@
 			</c:choose>
 		</table>
 	</div>
-</body>
-</html>
+</section>
+<%@ include file="/inc/tail.jsp" %>
+<script>
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-account.png');");
+});
+</script>

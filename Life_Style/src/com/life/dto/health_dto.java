@@ -9,14 +9,7 @@ public class health_dto {
 	private float health_amount;
 	private float health_kcal;
 	private Date health_regdate;
-	private String health_days;
 	
-	public String getHealth_days() {
-		return health_days;
-	}
-	public void setHealth_days(String health_days) {
-		this.health_days = health_days;
-	}
 	public String getHealth_id() {
 		return health_id;
 	}

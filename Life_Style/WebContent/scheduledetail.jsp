@@ -5,12 +5,9 @@
     <% response.setContentType("text/html; charset=UTF-8");%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<%@ include file="inc/head.jsp" %>
+
+<section id="schedule-detail">
 <%
 	String year = request.getParameter("year");
 	String month = request.getParameter("month");
@@ -25,7 +22,7 @@
 	int b = Integer.parseInt(month);
 	int c = Integer.parseInt(date);
 %>
-<body>
+
 	<form action="schedule.do?command=update" method="post">
 		<input type="hidden" name="schedule_no" value="${schedule_dto.schedule_no}">
 		
@@ -69,5 +66,10 @@
 			</c:if>
 		</table>
 	</form>
-</body>
-</html>
+</section>
+<script>
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-schedule.png');");
+});
+</script>	
+<%@ include file="inc/tail.jsp" %>

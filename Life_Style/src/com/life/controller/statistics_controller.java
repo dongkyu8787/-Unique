@@ -59,8 +59,8 @@ public class statistics_controller extends HttpServlet {
 			c.set(Calendar.MONTH, month - 1);
 			c.set(Calendar.DATE, day);
 			
-			String data = account_day_value(c, year, month, acc_biz) + "§" + account_week_value(c, year, month, acc_biz) +
-							"§" + kcal_day_value(c, date, health_biz) + "§" + kcal_week_value(c, year, month, day, health_biz);
+			String data = account_day_value(c, year, month, acc_biz, member_dto.getMember_id()) + "§" + account_week_value(c, year, month, acc_biz, member_dto.getMember_id()) +
+							"§" + kcal_day_value(c, date, health_biz, member_dto.getMember_id()) + "§" + kcal_week_value(c, year, month, day, health_biz, member_dto.getMember_id());
 			
 			PrintWriter out = response.getWriter();
 			out.print(data);
@@ -73,8 +73,8 @@ public class statistics_controller extends HttpServlet {
 			int day = c.get(Calendar.DATE);
 			
 			String date = year + "-" + month + "-" + day;
-			String data = account_day_value(c, year, month, acc_biz) + "§" + account_week_value(c, year, month, acc_biz) +
-							"§" + kcal_day_value(c, date, health_biz) + "§" + kcal_week_value(c, year, month, day, health_biz);
+			String data = account_day_value(c, year, month, acc_biz, member_dto.getMember_id()) + "§" + account_week_value(c, year, month, acc_biz, member_dto.getMember_id()) +
+							"§" + kcal_day_value(c, date, health_biz, member_dto.getMember_id()) + "§" + kcal_week_value(c, year, month, day, health_biz, member_dto.getMember_id());
 			
 			PrintWriter out = response.getWriter();
 			out.print(data);
@@ -93,7 +93,7 @@ public class statistics_controller extends HttpServlet {
 		dispatch.forward(request, response);
 	}
 
-	public String account_day_value(Calendar c, int year, int month, account_biz acc_biz) {
+	public String account_day_value(Calendar c, int year, int month, account_biz acc_biz,String member_id) {
 		int sunday = 0;
 		int saturday = 0;
 		if(1 == c.get(Calendar.WEEK_OF_MONTH)) {
@@ -107,7 +107,7 @@ public class statistics_controller extends HttpServlet {
 		String day_min_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(sunday+"");
 		String day_max_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(saturday+"");
 		
-		List<account_dto> account_list = acc_biz.searchList("kakao@진수"/*member_dto.getMember_id()*/, day_min_date, day_max_date);
+		List<account_dto> account_list = acc_biz.searchList(member_id, day_min_date, day_max_date);
 		
 		String labels =""; //요일
 		String series_value =""; // 값
@@ -126,7 +126,7 @@ public class statistics_controller extends HttpServlet {
 		return data;
 	}
 	
-	public String account_week_value(Calendar c, int year, int month, account_biz acc_biz) {
+	public String account_week_value(Calendar c, int year, int month, account_biz acc_biz, String member_id) {
 		int month_startday = 1;
 		int month_endday = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 		c.set(Calendar.DATE, month_endday);
@@ -134,7 +134,7 @@ public class statistics_controller extends HttpServlet {
 		String week_min_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(month_startday+"");
 		String week_max_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(month_endday+"");
 		
-		List<account_dto> account_week = acc_biz.searchList("kakao@진수"/*member_dto.getMember_id()*/, week_min_date, week_max_date);
+		List<account_dto> account_week = acc_biz.searchList(member_id, week_min_date, week_max_date);
 
 		String labels =""; //요일
 		String series_value =""; // 값
@@ -165,11 +165,11 @@ public class statistics_controller extends HttpServlet {
 		return data;
 	}
 
-	public String account_month_value(Calendar c, int year, int month, account_biz acc_biz) {
+	public String account_month_value(Calendar c, int year, int month, account_biz acc_biz, String member_id) {
 		String week_min_date = year + "-" + Util.isTwo(01+"") + "-" + Util.isTwo(01+"");
 		String week_max_date = year + "-" + Util.isTwo(12+"") + "-" + Util.isTwo(31+"");
 		
-		List<account_dto> account_week = acc_biz.searchList("kakao@진수"/*member_dto.getMember_id()*/, week_min_date, week_max_date);
+		List<account_dto> account_week = acc_biz.searchList(member_id, week_min_date, week_max_date);
 		
 		String labels =""; //요일
 		String series_value =""; // 값
@@ -197,8 +197,8 @@ public class statistics_controller extends HttpServlet {
 		return "";
 	}
 
-	public String kcal_day_value(Calendar c, String date, health_biz health_biz) {
-		List<health_dto> health_list = health_biz.searchList("kakao@진수"/*member_dto.getMember_id()*/, date, date);
+	public String kcal_day_value(Calendar c, String date, health_biz health_biz, String member_id) {
+		List<health_dto> health_list = health_biz.searchList(member_id, date, date);
 		
 		String data = "";
 		
@@ -209,7 +209,7 @@ public class statistics_controller extends HttpServlet {
 		return data;
 	}
 	
-	public String kcal_week_value(Calendar c, int year, int month, int day, health_biz health_biz) {
+	public String kcal_week_value(Calendar c, int year, int month, int day, health_biz health_biz, String member_id) {
 		String data = "";
 		
 		int sunday = 0;
@@ -226,7 +226,7 @@ public class statistics_controller extends HttpServlet {
 		String day_min_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(sunday+"");
 		String day_max_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(saturday+"");
 		
-		List<health_dto> health_week = health_biz.searchList("kakao@진수"/*member_dto.getMember_id()*/, day_min_date, day_max_date);
+		List<health_dto> health_week = health_biz.searchList(member_id, day_min_date, day_max_date);
 		float kcal = 0.f;
 		for(health_dto dto: health_week) {
 			kcal += dto.getHealth_kcal();

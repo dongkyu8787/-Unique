@@ -23,7 +23,8 @@ function attenduser(member_id,board_no_seq,board_viewnum,board_peoplelimit){
 					break;
 				}
 			}
-		}
+	}
+	
 	}	
 }
 
@@ -51,13 +52,13 @@ function send_message(id){
 }
 
 function add_friend(id){
-	
+	alert("${member_dto.member_id}")
 $.ajax({
 	url : "friend.do",
 	type : "post",
 	data : 'command=insert&friend_id='+id
 }).done(function(data){
-	
+	alert(data);
 })
 }
 

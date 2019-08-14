@@ -78,7 +78,7 @@ public class whisper_controller extends HttpServlet {
 			String [] seq = request.getParameterValues("chk");
 			String [] message_receive_id = {member_dto.getMember_id()};
 			message_biz.muldel(seq, message_receive_id);
-
+						
 			response.sendRedirect("whisper.do?command=message_box");
 		}
 	}

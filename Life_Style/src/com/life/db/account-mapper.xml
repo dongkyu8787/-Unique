@@ -15,12 +15,12 @@
 
 	<insert id="insert" parameterType="account_dto">
 		INSERT INTO
-		ACCOUNT(ACCOUNT_ID, ACCOUNT_IO_NO, ACCOUNT_DATE, ACCOUNT_DAYS, ACCOUNT_IN_CASH, ACCOUNT_OUT_CASH, ACCOUNT_IO_CONTENT,
+		ACCOUNT(ACCOUNT_ID, ACCOUNT_IO_NO, ACCOUNT_DATE, ACCOUNT_IN_CASH, ACCOUNT_OUT_CASH, ACCOUNT_IO_CONTENT,
 		ACCOUNT_TOTALCASH)
 		SELECT #{account_id}, (SELECT
 		NVL(MAX(ACCOUNT_IO_NO),0) FROM ACCOUNT WHERE
 		ACCOUNT_ID =
-		#{account_id})+1, SYSDATE, #{account_days}
+		#{account_id})+1, SYSDATE, 
 		#{account_in_cash}, #{account_out_cash}, #{account_io_content},
 		#{account_totalcash}
 		FROM MEMBER
@@ -49,9 +49,9 @@
 
 	</delete>
 
-	<select id="selecttotalcash" resultType="int"
+	<select id="selecttotalcash" resultType="String"
 		parameterType="map">
-		SELECT * FROM
+		SELECT ACCOUNT_TOTALCASH FROM
 		(SELECT S.ACCOUNT_TOTALCASH, ROWNUM AS
 		TOTAL
 		FROM (SELECT ACCOUNT_TOTALCASH FROM ACCOUNT WHERE ACCOUNT_ID =

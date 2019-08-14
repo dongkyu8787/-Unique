@@ -6,66 +6,16 @@
 	request.setCharacterEncoding("UTF-8");
 	response.setContentType("text/html; charset=UTF-8");
 %>
-
 <%
 response.setHeader("Pragma","no-cache");
 response.setHeader("Cache-control","no-store");
 response.setHeader("Expires","0");
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>만남게시판</title>
-<style type="text/css">
-#side {
-	position: relative;
-	top: 50px;
-}
+<%@ include file="inc/head.jsp" %>
 
-#center {
-	position: relative;
-	left: 200px;
-	top: -150px;
-}
-</style>
+<section id="meetingboard_list">
 
-<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script src='js/meetingboard.js'></script>
 
-</head>
-
-<body>
-	<span style="color: blue; font-size: 30px;">Life Style 
-		<span style="color: black; font-size: 20px;"> 
-			<span>상단메뉴</span> 
-			<span>메뉴1</span>
-			<span>메뉴2</span> 
-			<span>메뉴3</span> 
-			<span>메뉴4</span>
-		</span>
-	</span>
-
-	<div id="side">
-		<p style="color: red; font-size: 20px;">사이드 메뉴</p>
-		<table>
-			<tr>
-				<td>메뉴1</td>
-			</tr>
-			<tr>
-				<td>메뉴2</td>
-			</tr>
-			<tr>
-				<td>메뉴3</td>
-			</tr>
-			<tr>
-				<td>메뉴4</td>
-			</tr>
-			<tr>
-				<td>메뉴5</td>
-			</tr>
-		</table>
-	</div>
 	<form action="" method="get">
 		<div id="center">
 			<table border="1">
@@ -137,12 +87,14 @@ response.setHeader("Expires","0");
 				</c:choose>
 				<tr>
 					<td colspan="6">
+					<div class="dioing">
 					<input type="button" value="글쓰기" onclick="location.href='meetingboard.do?command=insertboard'">
-					<input type="button" value="홈으로 이동" onclick="location.href='home.jsp'">
+					</div>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="6">
+					<div class="dioing">
 						<select id="search" class="chk">
 							<option value="board_title">제목</option>
 							<option value="board_content">내용</option>
@@ -150,29 +102,40 @@ response.setHeader("Expires","0");
 							<option value="board_writer">글쓴이</option>
 							<option value="board_tag">태그</option>
 						</select>
+						
 						<input type="text" id="searchtxt">
 						<input type="button" value="검색" onclick="search2()">
+						</div>
 					</td>
 				</tr>
 				<tr align="center">
 					<td colspan="6" >
-					<a href="meetingboard.do?command=meetingboard&page=${1 }&search=${search}&searchtxt=${searchtxt}"> &lArr; </a>
-					<a href="meetingboard.do?command=meetingboard&page=${paging.startpage - 1 }&search=${search}&searchtxt=${searchtxt}"> &larr; </a>
+					<a href="meetingboard.do?command=meetingboard&page=${1 }&search=${search}&searchtxt=${searchtxt}"><img alt="" src="img/board/buttoniconSL.png"></a>
+					<a href="meetingboard.do?command=meetingboard&page=${paging.startpage - 1 }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttonicon1l.png"> </a>
 						<c:if test="${paging.page >= 2 }">
 							<a href="meetingboard.do?command=meetingboard&page=${paging.startpage - 1  }&search=${search}&searchtxt=${searchtxt}">...</a>
 						</c:if>
 					<c:forEach begin="${paging.startpage }" end="${paging.endpage }" var="i">
-						<a href="meetingboard.do?command=meetingboard&page=${i }&search=${search}&searchtxt=${searchtxt}">${i }</a>
+						<a href="meetingboard.do?command=meetingboard&page=${i }&search=${search}&searchtxt=${searchtxt}" id="fsize">${i }</a>
 					</c:forEach>
 						<c:if test="${paging.page < paging.totalpage - 2 }&search=${search}&searchtxt=${searchtxt}">
 						<a href="meetingboard.do?command=meetingboard&page=${paging.startpage + 1  }&search=${search}&searchtxt=${searchtxt}">...</a>
 						</c:if>
-					<a href="meetingboard.do?command=meetingboard&page=${paging.startpage + 1 }&search=${search}&searchtxt=${searchtxt}"> &rarr; </a>
-					<a href="meetingboard.do?command=meetingboard&page=${paging.totalpage }&search=${search}&searchtxt=${searchtxt}"> &rArr; </a>
+					<a href="meetingboard.do?command=meetingboard&page=${paging.startpage + 1 }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttonicon1r.png"> </a>
+					<a href="meetingboard.do?command=meetingboard&page=${paging.totalpage }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttoniconSR.png"> </a>
 			</td>
 		</tr>
 			</table>
 		</div>
 	</form>
-</body>
-</html>
+</section>
+
+    <script>
+    
+$(function() {
+	$("#bangbang").attr("src","img/board/board-meetingL.png");
+}); 
+
+</script>
+<script src='js/meetingboard.js'></script>
+<%@ include file="/inc/tail.jsp" %>

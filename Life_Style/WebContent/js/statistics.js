@@ -40,7 +40,7 @@ onload = function(){
     	gauge2= loadLiquidFillGauge("fillgauge2", obj_string4, config1);
     	
 	}).fail(function(){
-		alert("통신ㅅ ㅣㄹ패");
+		alert("통신실패");
 	});
 }
 $("#search_button").click(function(){
@@ -66,7 +66,7 @@ $("#search_button").click(function(){
 		gauge2.update(obj_string4);
 	
 	}).fail(function(){
-		alert("통신ㅅ ㅣㄹ패");
+		alert("통신실패");
 	});
 	//
 })

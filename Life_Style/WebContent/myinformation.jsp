@@ -10,33 +10,85 @@
     <% request.setCharacterEncoding("UTF-8");%>
     <% response.setContentType("text/html; charset=UTF-8");%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ include file="inc/head.jsp" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>개인정보 조회</title>
-<style type="text/css">
+<section id="myinformation">
+<div id="board-infoup"><img alt="" src="img/board/board-infoup.png"></div>
+<form action="myinformation.do" method="get">
 
-#side{
-	position:relative;
-	top:50px;
-}
-
-#center{
-	position:relative;
-	left : 200px;
-	top : -150px;
-}
-
-
-</style>
-
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<table >
+	
+		<tr>
+			<th>아이디</th>
+			<td>${member_dto.member_id }</td>
+		</tr>
+		<tr id="pwtag">
+			<th>비번</th>
+			<td><input type="password" id="pw" value="${member_dto.member_pw }"></td>
+		</tr>
+		<tr>
+			<th>이름</th>
+			<td>${member_dto.member_name }</td>
+		</tr>
+		<tr>
+			<th>생일</th>
+			<td>${member_dto.member_birth }</td>
+		</tr>
+		<tr>
+			<th>주소</th>
+			<td>
+				<input type="text" name="addr" id="addr1" readonly="readonly"  value='addrB[0]'  /> 
+				<input type="button" id="findaddr" value="주소 찾기" /><br/>
+				<input type="text" name="addr" id="addr2" readonly="readonly"  value='addrB[1]' />
+				<input type="text" name="addr" id="addr3"  value='addrB[2]' />
+			</td>
+		</tr>
+		<tr>
+			<th>전화번호</th>
+			<td><input type="text" id="phone" value="${member_dto.member_phone }"></td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td>${member_dto.member_email }</td>
+		</tr>
+		<tr>
+			<th>성별</th>
+			<td>${member_dto.member_gender }</td>
+		</tr>
+		<tr>
+			<th>관심사</th>
+			<td>
+				<input type="checkbox" name="interest" value="운동" />운동 
+				<input type="checkbox" name="interest" value="음식" />음식 
+				<input type="checkbox" name="interest" value="음악" />음악<br/> 
+				<input type="checkbox" name="interest" value="여행" />여행
+				<input type="checkbox" name="interest" value="패션" />패션 
+				<input type="checkbox" name="interest" value="영화" />영화<br/> 
+				<input type="checkbox" name="interest" value="뷰티" />뷰티 
+				<input type="checkbox" name="interest" value="건강" />건강
+				<input type="checkbox" name="interest" value="경제" />경제
+			</td>
+		</tr>
+		<tr>
+			<th>포인트</th>
+			<td>${member_dto.member_point }</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<input type="button" id='update' value="수정" />	
+			<input type="button" id='delete' value="탈퇴" />
+			
+			</td>
+		</tr>
+		</table>
+	</form>
+	<div id="board-infodown"><img alt="" src="img/board/board-infodown.png"></div>
+</section>
+<script type="text/javascript">
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-myinfo.png');");
+});
+</script>
 
 <script type="text/javascript">
 
@@ -131,118 +183,8 @@
 
 </script>
 
-</head>
-<body>
 
-
-<span style="color:blue;font-size:30px;">Life Style
-<span style="color:black;font-size:20px;">
-<span>상단메뉴</span>
-<span>메뉴1</span>
-<span>메뉴2</span>
-<span>메뉴3</span>
-<span>메뉴4</span>
-</span>
-</span>
-
-<div id="side">
-
-<p style="color:red;font-size:20px;">사이드 메뉴</p>
-
-	<table>
-		<tr>
-			<td>메뉴1</td>
-		</tr>
-		<tr>
-			<td>메뉴2</td>
-		</tr>
-		<tr>
-			<td>메뉴3</td>
-		</tr>
-		<tr>
-			<td>메뉴4</td>
-		</tr>
-		<tr>
-			<td>메뉴5</td>
-		</tr>
-	</table>
-</div>
-
-<form action="myinformation.do" method="get">
-
-<div id="center">
-<p>개인정보</p><!-- pw, addr, phone, email, interest 만 수정가능 -->	
-<p id="textchk">비밀번호, 주소, 전화번호, 관심사만 수정 가능</p>
-	<table border="1">
-	
-		<tr>
-			<th>아이디</th>
-			<td>${member_dto.member_id }</td>
-		</tr>
-		<tr id="pwtag">
-			<th>비번</th>
-			<td><input type="password" id="pw" value="${member_dto.member_pw }"></td>
-		</tr>
-		<tr>
-			<th>이름</th>
-			<td>${member_dto.member_name }</td>
-		</tr>
-		<tr>
-			<th>생일</th>
-			<td>${member_dto.member_birth }</td>
-		</tr>
-		<tr>
-			<th>주소</th>
-			<td>
-				<input type="text" name="addr" id="addr1" readonly="readonly" style="width:30%;" value='addrB[0]'  /> 
-				<input type="button" id="findaddr" value="주소 찾기" /><br/>
-				<input type="text" name="addr" id="addr2" readonly="readonly" style="width:80%;" value='addrB[1]' />
-				<input type="text" name="addr" id="addr3" style="width:80%;" value='addrB[2]' />
-			</td>
-		</tr>
-		<tr>
-			<th>전화번호</th>
-			<td><input type="text" id="phone" value="${member_dto.member_phone }"></td>
-		</tr>
-		<tr>
-			<th>이메일</th>
-			<td>${member_dto.member_email }</td>
-		</tr>
-		<tr>
-			<th>성별</th>
-			<td>${member_dto.member_gender }</td>
-		</tr>
-		<tr>
-			<th>관심사</th>
-			<td>
-				<input type="checkbox" name="interest" value="운동" />운동 
-				<input type="checkbox" name="interest" value="음식" />음식 
-				<input type="checkbox" name="interest" value="음악" />음악<br/> 
-				<input type="checkbox" name="interest" value="여행" />여행
-				<input type="checkbox" name="interest" value="패션" />패션 
-				<input type="checkbox" name="interest" value="영화" />영화<br/> 
-				<input type="checkbox" name="interest" value="뷰티" />뷰티 
-				<input type="checkbox" name="interest" value="건강" />건강
-				<input type="checkbox" name="interest" value="경제" />경제
-			</td>
-		</tr>
-		<tr>
-			<th>포인트</th>
-			<td>${member_dto.member_point }</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-			<input type="button" id='update' value="수정" />	
-			<input type="button" id='delete' value="탈퇴" />
-			
-			</td>
-		</tr>
-	</table>
-
-</div>
-
-</form>
-
+<%@ include file="inc/tail.jsp" %>
 <script type="text/javascript">
 
 	window.onbeforeunload = unloadPage();
@@ -253,7 +195,7 @@
 		if(id.match("@")){
 			document.getElementById('pw').setAttribute('type','hidden');
 			document.getElementById('pwtag').setAttribute('style','display:none');
-			document.getElementById('textchk').innerText='주소, 전화번호, 관심사만 수정 가능';
+			//document.getElementById('textchk').innerText='주소, 전화번호, 관심사만 수정 가능';
 		}
 		
 		var addrA ='${member_dto.member_addr}'
@@ -278,5 +220,3 @@
 	}
 
 </script>
-</body>
-</html>

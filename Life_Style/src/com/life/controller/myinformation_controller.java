@@ -50,7 +50,8 @@ public class myinformation_controller extends HttpServlet {
 			member_dto.setMember_interest(interest);
 
 			int res = biz.updateMemberinfo(member_dto); 
-			if(res > 0) {		
+			
+			if(res > 0) {			
 				alert(response,"수정성공 다시 로그인 해주세요","login.do?command=logout");
 			}
 		}else if(command.equals("DeleteMemberInfo")) {

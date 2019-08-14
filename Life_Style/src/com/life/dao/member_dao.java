@@ -156,4 +156,43 @@ public class member_dao extends member_sqlmap {
 
 		return res;
 	}
+
+	public member_dto searchid(String email) {
+		SqlSession session = null;
+		member_dto dto = null;
+		
+		Map<String, String> map = new HashMap<>();
+
+		map.put("member_email", email);
+		
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			dto = session.selectOne(namespace + "searchid", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return dto;
+	}
+
+	public member_dto searchpw(String id, String memail) {
+		SqlSession session = null;
+		member_dto dto = null;
+		
+		Map<String, String> map = new HashMap<>();
+
+		map.put("member_id", id);
+		map.put("member_email", memail);
+		
+		try {
+			session = getSqlSessionFactory().openSession(false);
+			dto = session.selectOne(namespace + "searchpw", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return dto;
+	}
 }

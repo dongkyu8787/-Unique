@@ -2,43 +2,35 @@
     pageEncoding="UTF-8"%>
     <% request.setCharacterEncoding("UTF-8");%>
     <% response.setContentType("text/html; charset=UTF-8");%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ include file="inc/head.jsp" %>
 
-<script type="text/javascript" src="/Life_Style03/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-
-</head>
-<body>
-   <form action="meetingboard.do" method="post">
-      <input type="hidden" name="command" value="insertASres">
-      <input type="hidden" name="board_no_seq" value="${insertAS_dto.board_no_seq }">
-      <table border="1">
-         <tr>
-            <th>글쓴이</th>
-            <td><textarea rows="1" cols="100" style="resize:none" name="board_writer"></textarea></td>
-         </tr>
-         <tr>
-            <th>제목</th>
-            <td><textarea rows="1" cols="100" style="resize:none" name="board_title"></textarea></td>
-         </tr>
-         <tr>
-            <th>글내용</th>
-            <td>
-               <textarea name="board_content" id="ir1" rows="10" cols="100" style="resize:none"></textarea>
-            </td>
-         </tr>
-         <tr>
-            <td colspan="2">
-            <input type="submit" value="새글입력" onclick="submitContents(this)">
-            <input type="button" value="홈으로이동" onclick="location.href='home.jsp'">
-            </td>
-         </tr>
-      </table>
-   </form>
-
+<section id="meetingboard_insertAS">
+	<form action="meetingboard.do" method="post">
+		<input type="hidden" name="command" value="insertASres">
+		<input type="hidden" name="board_no_seq" value="${insertAS_dto.board_no_seq }">
+		<table border="1">
+			<tr>
+				<th>글쓴이</th>
+				<td><input type="text" name="board_writer"></td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="board_title"></td>
+			</tr>
+			<tr>
+				<th>글내용</th>
+				<td>
+					<textarea name="board_content" id="ir1" ></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				<input type="submit" value="새글입력" onclick="submitContents(this)">
+				</td>
+			</tr>
+		</table>
+	</form>
+</section>
 <script type="text/javascript">
 
 var oEditors = [];
@@ -46,7 +38,7 @@ var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({
     oAppRef: oEditors,
     elPlaceHolder: "ir1",
-    sSkinURI: "/Life_Style03/smarteditor/SmartEditor2Skin.html",
+    sSkinURI: "/Life_Style/smarteditor/SmartEditor2Skin.html",
     fCreator: "createSEditor2"
 });
 //‘저장’ 버튼을 누르는 등 저장을 위한 액션을 했을 때 submitContents가 호출된다고 가정한다.
@@ -59,7 +51,8 @@ function submitContents(elClickedObj) {
         elClickedObj.form.submit();
     } catch(e) {}
 }
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-meeting2.png');");
+});
 </script>
-
-</body>
-</html>
+<%@ include file="inc/tail.jsp" %>

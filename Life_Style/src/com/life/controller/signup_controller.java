@@ -51,7 +51,7 @@ public class signup_controller extends HttpServlet {
 			member_dto.setMember_interest(interest);
 
 			int res = biz.signupChk(member_dto);
-			
+
 			if(res==1) {
 				PrintWriter out = response.getWriter();
 				out.println("성공");

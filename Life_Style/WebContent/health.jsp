@@ -8,44 +8,26 @@
 <%
 	response.setContentType("text/html; charset=UTF-8");
 %>
+<%@ include file="inc/head.jsp" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="js/health.js"></script>
-<style type="text/css">
-.desc{
-	background-color : white;
-}
-.desc:visited{
-	background-color : lightblue;
-}
-.desc:hover{
-	cursor:pointer;
-}
-
-
-</style>
-</head>
-<body>
-	<div>
+<section id="health">
+	<div id="updiv">
 		<h1>건강 관리</h1>
 		<form action="health.do?command=insertres" method="post">
-		<input type="hidden" name="id" value="${member_dto.member_id }">
 			<table>
+				<tr>
+					<th>ID</th>
+					<td><input type="text" name="id" value=""></td>
+				</tr>
 				<tr>
 					<th>몸무게</th>
 					<td><input type="text" name="weight" value=""></td>
 				</tr>
 				<tr>
 					<th>먹은 음식</th>
-					<td>
-						<input type="text" id="food" name="food" value="">
-						<input type="button" value="검색" onclick="search();">
-					</td>
+					<td><input type="text" id="food" name="food" value="">
+						<input type="button" value="먹은거" onclick="search();"> <span
+						id="search"></span></td>
 				</tr>
 				<tr>
 					<th>칼로리</th>
@@ -57,7 +39,7 @@
 					</td>
 					<td>
 						<div id="amount_div">
-							
+							<input type="number" id="amount" name="amount">
 						</div>
 					</td>
 				</tr>
@@ -70,7 +52,7 @@
 			</table>
 		</form>
 	</div>
-	<div>
+	<div id="downdiv">
 		<table border="1">
 			<col width="200">
 			<col width="200">
@@ -104,5 +86,10 @@
 			</c:choose>
 		</table>
 	</div>
-</body>
-</html>
+</section>
+<%@ include file="/inc/tail.jsp" %>
+<script>
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-health.png');");
+});
+</script>

@@ -40,6 +40,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.life.biz.health_biz;
 import com.life.dto.health_dto;
+import com.life.dto.member_dto;
 import com.sun.org.apache.xerces.internal.util.XML11Char;
 
 @WebServlet("/health.do")
@@ -59,6 +60,7 @@ public class health_controller extends HttpServlet {
 
 		health_biz biz = new health_biz();
 
+		member_dto member_dto = (member_dto)request.getSession().getAttribute("member_dto");
 		if (command.equals("food")) {
 			String desc_kor = request.getParameter("DESC_KOR");
 
@@ -116,7 +118,7 @@ public class health_controller extends HttpServlet {
 		} else if (command.equals("health")) {
 
 			List<health_dto> list = new ArrayList<health_dto>();
-			String member_id = request.getParameter("member_id");
+			String member_id = member_dto.getMember_id();
 			list = biz.selectList(member_id);
 
 			request.setAttribute("list", list);
@@ -126,12 +128,13 @@ public class health_controller extends HttpServlet {
 
 		} else if (command.equals("insertres")) {
 
-			String id = request.getParameter("id");
+			String id = member_dto.getMember_id();
 			int weight = 0;
 			if (request.getParameter("weight") != null)
 				weight = Integer.parseInt(request.getParameter("weight"));
 
 			String food = request.getParameter("food");
+			System.out.println(food);
 			float amount = 0;
 			if (request.getParameter("amount") != null)
 				amount = Float.parseFloat(request.getParameter("amount"));
@@ -150,15 +153,11 @@ public class health_controller extends HttpServlet {
 
 			int res = biz.insert(dto);
 
-			request.setAttribute("health_dto", dto);
-
 			if (res > 0) {
-				RequestDispatcher dispatch = request.getRequestDispatcher("health.do?command=health");
-				dispatch.forward(request, response);
+				response.sendRedirect("health.do?command=health");
 
 			} else {
-				RequestDispatcher dispatch = request.getRequestDispatcher("health.do?command=health");
-				dispatch.forward(request, response);
+				response.sendRedirect("health.do?command=health");
 			}
 
 		} else if (command.equals("search")) {

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.life.biz.account_biz;
 import com.life.dto.account_dto;
+import com.life.dto.member_dto;
 
 @WebServlet("/account.do")
 public class account_controller extends HttpServlet {
@@ -30,9 +31,9 @@ public class account_controller extends HttpServlet {
 	  String command = request.getParameter("command");
 	  
 	  account_biz biz = new account_biz();
-	  
+	  member_dto member_dto = (member_dto)request.getSession().getAttribute("member_dto");
 	  if (command.equals("insertres")) {
-		  String id = request.getParameter("id");
+		  String id =member_dto.getMember_id();
 		  int in = Integer.parseInt(request.getParameter("in"));
 		  int out = Integer.parseInt(request.getParameter("out"));
 		  String content = request.getParameter("content");
@@ -50,15 +51,16 @@ public class account_controller extends HttpServlet {
 		  int res = biz.insert(dto, id);
 		  
 		  if(res > 0) {
-			  dispatch(request, response, "account.do?command=account");
+			 response.sendRedirect("account.do?command=account");
 		  } else {
-			  dispatch(request, response, "account.do?command=account");
+			  response.sendRedirect("account.do?command=account");
 		  }
 	  } else if(command.equals("account")) {
 		  
 		  List<account_dto> list = new ArrayList<account_dto>();
-		  String member_id = request.getParameter("member_id");
-		  list = biz.selectList(member_id);
+
+		  String account_id =member_dto.getMember_id();
+		  list = biz.selectList(account_id);
 		  
 		  request.setAttribute("list", list);
 		  dispatch(request, response, "account.jsp"); 

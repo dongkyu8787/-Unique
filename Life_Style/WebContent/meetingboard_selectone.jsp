@@ -2,69 +2,56 @@
     pageEncoding="UTF-8"%>
     <% request.setCharacterEncoding("UTF-8");%>
     <% response.setContentType("text/html; charset=UTF-8");%>
+ 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<style type="text/css">
-#pop_up{
-	border: 1px;
-	font-size : 12px;
-	width: 80px;
-	height: 47px;
-	background-color: rgb(199, 202, 202);
-	display: none;
-}
-#pop_up span{
-	margin: 2px;
-	cursor: pointer;
-}
-</style>
-<body>
+<%@ include file="/inc/head.jsp" %>
+
+<section id="meetingboard_selectone">
 <form action="meetingboard.do?">
 	<input type="hidden" name="command" value="comment_insert">
 	<input type="hidden" name="board_no_seq" value="${board_dto.board_no_seq }">
-	<table border="1">
+	<table >
+		<tr>
+			<th>글번호</th>
+			<td >${board_dto.board_no_seq }</td>
+		</tr>
 		<tr>
 			<th>글쓴이</th>
-			<td style="width:700px; height:20px">${board_dto.board_writer }</td>
+			<td >${board_dto.board_writer }</td>
 		</tr>
 		
 		<tr>
 			<th rowspan="6">제약조건</th>
-			<td style="width:700px; height:20px">관심사 : ${board_dto.board_tag }</td> 
+			<td >관심사 : ${board_dto.board_tag }</td> 
 		</tr>
 		<tr>
-			<td style="width:700px; height:20px">성별 : ${board_dto.board_genderlimit }</td> 
-		</tr>
-		
-		<tr>
-			<td style="width:700px; height:20px">나이 : ${board_dto.board_age_min }~${board_dto.board_age_max }세</td>
+			<td >성별 : ${board_dto.board_genderlimit }</td> 
 		</tr>
 		
 		<tr>
-			<td style="width:700px; height:20px">최대인원 : ${board_dto.board_peoplelimit } 명</td> 
+			<td >나이 : ${board_dto.board_age_min }~${board_dto.board_age_max }세</td>
 		</tr>
 		
 		<tr>
-			<td style="width:700px; height:20px">지역 : ${board_dto.board_location } </td> 
+			<td >최대인원 : ${board_dto.board_peoplelimit } 명</td> 
 		</tr>
 		
 		<tr>
-			<td style="width:700px; height:20px">시간 : <fmt:formatDate value="${board_dto.board_timelimit }" pattern="yyyy-MM-dd HH:mm"/> 까지</td>
+			<td >지역 : ${board_dto.board_location } </td> 
+		</tr>
+		
+		<tr>
+			<td>시간 : <fmt:formatDate value="${board_dto.board_timelimit }" pattern="yyyy-MM-dd HH:mm"/> 까지</td>
 		</tr>
 		
 		<tr>
 			<th>제목</th>
-			<td style="width:700px; height:20px">${board_dto.board_title }　　　　　　　　　　　　　　　　　　　　　　　　　<fmt:formatDate value="${board_dto.board_regdate}" pattern="yyyy-MM-dd"/></td>
+			<td >${board_dto.board_title }</td>
 		</tr>
 		<tr>
 			<th>글내용</th>
-			<td width="300px" height="150px">
+			<td>
 				${board_dto.board_content }
 				<hr>
 				<span id="attend">
@@ -84,6 +71,12 @@
 				
 				<input type="button" value="참여하기" onclick="attenduser('${member_dto.member_id}','${board_dto.board_no_seq }','${board_dto.board_viewnum }','${board_dto.board_peoplelimit }')">
 			</td>
+
+		</tr>
+		<tr>
+			<th>글작성일</th>
+			<td ><fmt:formatDate value="${board_dto.board_regdate}" pattern="yyyy-MM-dd"/></td>
+			
 		</tr>
 		<tr>
 			<th>모임장소</th>
@@ -92,21 +85,23 @@
 		<tr>
 			<th>날씨</th>
 			<td>
-			<table>
+			<table border="1">
+				<colgroup>
+					<col style="width: 25%; height: 50%;">
+					<col style="width: 25%; height: 50%;">
+					<col style="width: 25%; height: 50%;">
+					<col style="width: 25%; height: 50%;">
+				</colgroup>
 				<tr>
-					<td align="center">습도(%)</td>
+					<th align="center">습도(%)</th>
+					<th align="center">최저/최고(℃)</th>
+					<th align="center">현재 온도(℃)</th>
+					<th align="center">현재 온도(℃)</th>
+				</tr>
+				<tr>
 					<td align="center"><span>${weather_dto.weather_reh}</span></td>
-				</tr>
-				<tr>
-					<td align="center">최저/최고(℃)</td>
 					<td align="center"><span style="color: blue">${weather_dto.weather_tmn }</span><b>/</b><span style="color: red">${weather_dto.weather_tmx }</span></td>
-				</tr>
-				<tr>
-					<td align="center">현재 온도(℃)</td>
 					<td align="center"><span>${weather_dto.weather_t3h}</span></td>
-				</tr>
-				<tr>
-					<td align="center">현재 온도(℃)</td>
 					<td align="center"><span>${weather_dto.weather_sky}</span></td>
 				</tr>
 			</table>
@@ -114,18 +109,18 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<c:if test="${member_dto.member_id eq board_dto.board_writer}">
-					<input type="button" value="수정" onclick="location.href='meetingboard.do?command=meetingupdate&board_no_seq=${board_dto.board_no_seq}'">
-					<input type="button" value="삭제" onclick="location.href='meetingboard.do?command=meetingdelete&board_no_seq=${board_dto.board_no_seq}'">
-				</c:if>
-				<input type="button" value="답글작성" onclick="location.href='meetingboard.do?command=insertAS&board_no_seq=${board_dto.board_no_seq}'">
-				<input type="button" value="홈으로이동" onclick="location.href='home.jsp'">
+			<div class="dioing">
+			
+				<input type="button" value="수정" onclick="location.href='meetingboard.do?command=meetingupdate&board_no_seq=${board_dto.board_no_seq}'">
+				<input type="button" value="삭제" onclick="location.href='meetingboard.do?command=meetingdelete&board_no_seq=${board_dto.board_no_seq}'">
+			</div>
 			</td>
 		</tr>
 
 		<tr>
 			<th>댓글작성</th>
 			<td colspan="2">
+			
 			<input type="hidden" name="board_no_seq" value="${board_dto.board_no_seq }">
 			<input type="hidden" name="board_viewnum" value="${board_dto.board_viewnum }">
 			<input type="text" name="comment_writer" value="${member_dto.member_id }">
@@ -139,17 +134,27 @@
 				<td style="font-size:12px; font-weight:bold" class="attends">${comment_dto.comment_writer }</td>
 				<td>${comment_dto.comment_content }</td>
 				<td style="font-size:10px"><fmt:formatDate value="${comment_dto.comment_regdate }" pattern="yyyy-MM-dd HH:mm"/></td>
-				<td><input type="button" value="삭제" onclick="location.href='meetingboard.do?command=comment_delete&comment_no_seq=${comment_dto.comment_no_seq}&board_no_seq=${board_dto.board_no_seq }&board_viewnum=${board_dto.board_viewnum}'">
+				<td>
+				<div class="dioing">
+				<input type="button" value="삭제" onclick="location.href='meetingboard.do?command=comment_delete&comment_no_seq=${comment_dto.comment_no_seq}&board_no_seq=${board_dto.board_no_seq }&board_viewnum=${board_dto.board_viewnum}'">
+				</div>
+				</td>
 			</tr>
 		</c:forEach>	
 	</table>
 </form>	
-
 <div id="pop_up">
 	<span id="add_friend" >친구 추가</span><hr>
 	<span id="send_message">쪽지 보내기</span>
 </div>
-<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+</section>
+
+<script type="text/javascript">
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-meeting1.png');");
+});
+</script>	
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c54788c8f1925b6e8dd99b858e1c6f11&libraries=services"></script>
 <script type="text/javascript" src="js/meetingboard_select.js"></script>
 <script type="text/javascript">
@@ -183,6 +188,7 @@ var infowindow = new kakao.maps.InfoWindow({
   
 // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 infowindow.open(map, marker); 
+
+
 </script>
-</body>
-</html>
+<%@ include file="/inc/tail.jsp" %>

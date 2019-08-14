@@ -10,7 +10,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+@import url("css/messagecss.css");
+ 
+</style>
 </head>
+
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="js/muldel.js"></script>
 <body>
@@ -62,9 +68,8 @@
 			</c:choose>
 	</table>
 	</div>
-	
-	<input type="submit" value="삭제">
 	<input type="button" value="글쓰기" onclick="location.href='whisper.do?command=insert'">
+	<input type="submit" value="삭제">
 	<input type="button" onclick="self.close()" value="닫기">
 </form>
 </body>

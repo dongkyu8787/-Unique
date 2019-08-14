@@ -9,10 +9,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+@import url("css/messagecss.css");
+@font-face {font-family: "fontstyle";src: url("css/Goyang.ttf") format("truetype");} 
+</style>
+
 <script type="text/javascript" src="js/friend_box.js"></script>
+
 </head>
 <body>
-	<div>
+	<div id="fontstyle">
 		<table border="1">
 			<c:choose>
 				<c:when test="${empty friend_dto }">

@@ -13,7 +13,6 @@ let total_kcal = '';
 				let tmp = msg.split("§");
 				total_desc = tmp[0].split("/");
 				total_kcal = tmp[1].split("/");
-				alert(msg);
 				let del_desc = [];
 				let del_kcal = [];
 					

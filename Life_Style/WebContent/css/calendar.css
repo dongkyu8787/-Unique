@@ -1,6 +1,4 @@
-a{
-            text-decoration: none;
-        }
+
         #calendar{
             border-collapse: collapse;
             border: 1px solid gray;
@@ -29,6 +27,7 @@ a{
         	background-size: 100%;
         }
         .clist{
+        	font-family:"wrap";
         	font-size: 5px;
         	margin : 1px;
         	background-color: rgba(243, 162, 250,0.5);

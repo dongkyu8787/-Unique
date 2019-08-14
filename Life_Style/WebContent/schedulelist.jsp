@@ -7,12 +7,9 @@
     <% response.setContentType("text/html; charset=UTF-8");%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<%@ include file="inc/head.jsp" %>
+
+<section id="schedule-list">
 <%
 	String year = request.getParameter("year");
 	String month = request.getParameter("month");
@@ -29,8 +26,7 @@
 	int c = Integer.parseInt(date);
 %>
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="js/muldel.js"></script>
-<body>
+
 	<h1><%=year+"년 "+month+"월 "+date+"일 " %> 일정표</h1>
 	<form action="schedule.do" method="post" id="muldelform">
 		<input type="hidden" name="command" value="muldel">
@@ -95,5 +91,12 @@
 			</tr>
 		</table>
 	</form>
-</body>
-</html>
+</section>
+<script type="text/javascript" src="js/muldel.js"></script>
+<script>
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-schedule.png');");
+});
+</script>
+<%@ include file="inc/tail.jsp" %>	
+

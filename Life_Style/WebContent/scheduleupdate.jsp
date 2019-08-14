@@ -2,14 +2,11 @@
 <%@page import="com.life.dto.schedule_dto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <% request.setCharacterEncoding("UTF-8");%>
-    <% response.setContentType("text/html; charset=UTF-8");%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<% request.setCharacterEncoding("UTF-8");%>
+<% response.setContentType("text/html; charset=UTF-8");%>
+<%@ include file="inc/head.jsp" %>
+
+<section id="schedule-update">
 <%
 	schedule_dto dto = (schedule_dto)request.getAttribute("schedule_dto");
 	int hour = Integer.parseInt(dto.getSchedule_date().substring(8, 10));
@@ -19,7 +16,7 @@
 	int today_hour = cal.get(Calendar.HOUR_OF_DAY);
 	int today_min = cal.get(Calendar.MINUTE);
 %>
-<body>
+
 <form action="schedule.do?command=updateres" method="post">
 		<input type="hidden" name="schedule_no" value="${schedule_dto.schedule_no}">
 		
@@ -67,5 +64,10 @@
 			</tr>
 		</table>
 	</form>
-</body>
-</html>
+</section>	
+<script>
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-schedule.png');");
+});
+</script>
+<%@ include file="inc/tail.jsp" %>

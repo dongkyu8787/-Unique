@@ -132,6 +132,15 @@ $(function(){
 			alert("인증번호가 틀렸습니다.");
 		}	
 	}
+	
+	function idsearch(){
+		
+		open("id_search.jsp","", "width=500px,height=200px");
+	}
+	
+	function pwsearch(){
+		open("pw_search.jsp","", "width=500px,height=200px");
+	}
 
 	function logout(){
 		
@@ -147,18 +156,90 @@ $(function(){
 	}
 
 	
-	function sessionchk(){
+	function sessionchk1(){
 		var id = document.getElementById("hiddenval").value;
+		var url = document.getElementById("urllink1").value;
 		var test ='null';
-		alert(id);
-		alert(test);
+		//alert(id);
+		//alert(test);
 		if(id==test){
 			alert("로그인이 필요합니다.");	
 			loginForm();	
 		}else{
-			location.href="link.jsp";				
+			location.href=url+id;				
 		}
 	}
+	
+	function sessionchk2(){
+		var id = document.getElementById("hiddenval").value;
+		var url = document.getElementById("urllink2").value;
+		var test ='null';
+		//alert(id);
+		//alert(test);
+		if(id==test){
+			alert("로그인이 필요합니다.");	
+			loginForm();	
+		}else{
+			location.href=url;				
+		}
+	}
+	
+	function sessionchk3(){
+		var id = document.getElementById("hiddenval").value;
+		var url = document.getElementById("urllink3").value;
+		var test ='null';
+		//alert(id);
+		//alert(test);
+		if(id==test){
+			alert("로그인이 필요합니다.");	
+			loginForm();	
+		}else{
+			location.href=url;				
+		}
+	}
+	
+	function sessionchk4(){
+		var id = document.getElementById("hiddenval").value;
+		var url = document.getElementById("urllink4").value;
+		var test ='null';
+		//alert(id);
+		//alert(test);
+		if(id==test){
+			alert("로그인이 필요합니다.");	
+			loginForm();	
+		}else{
+			location.href=url;				
+		}
+	}
+	
+	function sessionchk5(){
+		var id = document.getElementById("hiddenval").value;
+		var url = document.getElementById("urllink5").value;
+		var test ='null';
+		//alert(id);
+		//alert(test);
+		if(id==test){
+			alert("로그인이 필요합니다.");	
+			loginForm();	
+		}else{
+			location.href=url;				
+		}
+	}
+	
+	function sessionchk6(){
+		var id = document.getElementById("hiddenval").value;
+		var url = document.getElementById("urllink6").value;
+		var test ='null';
+		//alert(id);
+		//alert(test);
+		if(id==test){
+			alert("로그인이 필요합니다.");	
+			loginForm();	
+		}else{
+			location.href=url;				
+		}
+	}
+	
 
 	let interest ='';
 	$(function(){
@@ -190,11 +271,11 @@ $(function(){
 			var email = document.getElementById("originemail").value;
 			//alert(email);
 			var gender = $("input[type=radio][name=origingender]:checked").val() 
-			alert(gender); 
+			//alert(gender); 
 			$("input[type=checkbox][name=origininterest]:checked").each(function() {
 				interest += $(this).val() + "/";
 			})
-			alert(interest);
+			//alert(interest);
 			
 			if(!id || pattern_spc.test(id) || pattern_kor.test(id) || id.length > 12 || id.length < 4){ 
 				bool = 'id오류';
@@ -236,7 +317,7 @@ $(function(){
 					success : function(msg) {
 						//alert(msg);
 						if (isNaN(msg)==true) {
-							alert("회원가입 성공");
+							
 						    closeWin();
 						} else {
 							alert("회원가입 실패 입력정보,ID중복 체크,이메일 인증을 확인 해주세요");
@@ -312,9 +393,9 @@ $(function(){
 					method : "post",
 					dataType : 'text',
 					success : function(msg) {
-						//alert(msg);
+						
 						if (isNaN(msg)==true) {
-							alert("회원가입 성공");
+							
 						    closeWin();
 						} else {
 							alert("회원가입 실패 입력정보를 확인 해주세요");
@@ -339,9 +420,9 @@ $(function(){
 					url : "login.do?command=login&id="+ id +"&pw="+ pw,
 					method : "post",
 					success : function(msg) {
-						//alert(msg);
+					
 						if (msg!=2) {
-							alert("로그인 성공");
+							
 							closeWin();
 							document.getElementById("non_login").style.display = "none";
 							document.getElementById("on_login").style.display = "block";
@@ -358,7 +439,6 @@ $(function(){
 
 	function registForm() {
 		document.getElementById("regist").style.display = "block";
-		document.body.style.background = "gray";
 
 		var btns = document.getElementsByName("btn");
 		for ( var i in btns) {
@@ -368,7 +448,6 @@ $(function(){
 	
 	function kakao_registForm(id, email) {
 		document.getElementById("kakao_regist").style.display = "block";
-		document.body.style.background = "gray";
 
 		var btns = document.getElementsByName("btn");
 		document.getElementById("kakaoid").value = id;
@@ -380,7 +459,6 @@ $(function(){
 
 	function loginForm() {
 		document.getElementById("login").style.display = "block";
-		document.body.style.background = "gray";
 
 		var btns = document.getElementsByName("btn");
 		for ( var i in btns) {
@@ -392,13 +470,11 @@ $(function(){
 		document.getElementById("kakao_regist").style.display = "none";
 		document.getElementById("regist").style.display = "none";
 		document.getElementById("login").style.display = "none";
-		document.body.style.background = "white";
 		
 		approve = '';
 		idapprove = '';
 		
-		//alert(approve);
-		//alert(idapprove);
+		
 		
 		document.getElementById("originemail").readOnly = false;
 		document.getElementById("userwriternum").readOnly = false;
@@ -429,7 +505,6 @@ $(function(){
 		document.getElementById("kakao_regist").style.display = "none";
 		document.getElementById("regist").style.display = "none";
 		document.getElementById("login").style.display = "none";
-		document.body.style.background = "white";
 		
 		approve = '';
 		idapprove = '';

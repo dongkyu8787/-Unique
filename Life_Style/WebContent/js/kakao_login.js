@@ -23,7 +23,7 @@ Kakao.Auth.createLoginButton({
 								const ss = msg.split("/");
 								
 								if (ss.length < 2) {
-									alert("로그인 성공");
+									
 									closeWin();
 									document.getElementById("non_login").style.display = "none";
 									document.getElementById("on_login").style.display = "block";

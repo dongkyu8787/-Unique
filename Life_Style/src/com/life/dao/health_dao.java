@@ -33,6 +33,7 @@ public class health_dao extends health_sqlmap {
 		SqlSession session = null;
 		int res = 0;
 
+		System.out.println(dto.getHealth_food());
 		try {
 			session = getSqlSessionFactory().openSession(true);
 			res = session.insert(namespace + "insert", dto);

@@ -2,20 +2,9 @@
     pageEncoding="UTF-8"%>
     <% request.setCharacterEncoding("UTF-8");%>
     <% response.setContentType("text/html; charset=UTF-8");%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ include file="/inc/head.jsp" %>
 
-<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script src='js/meetingboard.js'></script>
-<script type="text/javascript" src="/Life_Style/smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-<style>
-	@import url("css/mapC.css");
-</style>
-</head>
-<body>
+<section id="meetingboard_update">
 	<form action="meetingboard.do" method="post" name="frm">
 		<input type="hidden" name="command" value="meetingupdateres">
 		<input type="hidden" name="board_no_seq" value="${boardupdate_dto.board_no_seq }">
@@ -28,14 +17,15 @@
 		<input type="hidden" name="t3h" id="weather_t3h">
 		<input type="hidden" name="sky" id="weather_sky">
 		<table border="1">
+			
 			<tr>
 				<th>글쓴이</th>
-				<td><textarea rows="1" cols="119" style="resize:none" name="board_writer">${member_dto.member_id }</textarea></td>
+				<td>${boardupdate_dto.board_writer }</td>
 			</tr>
 			<tr>
 				<th>제목</th>
 				<td>
-				<select name="board_tag" style="height:21px"> 
+				<select name="board_tag" > 
 					<option>관심사 태그 목록</option>
 					<option value="운동">운동</option>
 					<option value="음식">음식</option>
@@ -47,10 +37,8 @@
 					<option value="건강">건강</option>
 					<option value="경제">경제</option>
 				</select>
-				<textarea rows="1" cols="100" style="resize:none" name="board_title">
-				</textarea></td>
+				<input  name="board_title" type="text" value="${boardupdate_dto.board_title }"></td>
 			</tr>
-			
 			<tr>
 				<th rowspan="5">조건 선택</th>
 				<td>
@@ -62,19 +50,18 @@
 			
 			<tr>
 				<td>
-				나이제한 : <input type="text" name="board_age_min" type="number" min="0" max="200" id="min" onchange="compare()">~
-				<input type="text" name="board_age_max" type="number" min="0" max="200" id="max" onchange="compare()">
+				나이제한 : <input type="text" name="board_age_min" type="number" min="0" max="200" id="min" onchange="compare()" value="${boardupdate_dto.board_age_min }">~
+				<input type="text" name="board_age_max" type="number" min="0" max="200" id="max" onchange="compare()" value="${boardupdate_dto.board_age_max }">
 				</td>
 			</tr>
 			<tr>
 				<td>
-				최대인원수 : <input type="number" name="board_peoplelimit" min="0" max="50">
+				최대인원수 : <input type="number" name="board_peoplelimit" min="0" max="50" value="${boardupdate_dto.board_peoplelimit }">
 				</td>
 			</tr>
-			
 			<tr>
 				<td>
-				<select name="board_location" style="height:21px"> 
+				<select name="board_location"> 
 					<option>지역선택</option>
 					<option value="서울">서울</option>
 					<option value="경기">경기</option>
@@ -87,67 +74,78 @@
 				</td>
 			</tr>
 			<tr>
-				<td>시간제한 : 날짜입력 <input name="board_date" type="datetime-local" value="" id="now_date"></td>
+				<td>시간제한 : 날짜입력 <input name="board_date" type="datetime-local" value="${boardupdate_dto.board_timelimit }" id="now_date"></td>
 			</tr>
+			
 			<tr>
 				<th>글내용</th>
+				<td><textarea id="ir12" name="board_content" >${boardupdate_dto.board_content }</textarea></td>
+			</tr>
+			
+			<tr>
+				<th>장소</th>
 				<td>
-				<textarea name="board_content" id="ir1" rows="10" cols="118" style="resize:none"></textarea>
+				<div class="map_wrap">
+					<div id="map"></div>
+						<div id="menu_wrap" class="bg_white" style="height:30%; float: left;" >
+							<div class="option">
+								<div>
+							키워드 :  <input type="text" value="이태원"  id="keyword" size="15"> 
+									<button type="button" onclick="searchPlaces();">검색하기</button> 
+								</div>
+							</div>
+							<ul id="placesList"></ul>
+							<div id="pagination"></div>
+							<div class="hAddr">
+								<span id="centerAddr"></span>
+							</div>
+						</div>
+					</div>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
-				<input type="submit" value="수정하기" onclick="submitContents(this)">
-				<input type="button" value="홈으로이동" onclick="location.href='home.jsp'">
-				</td>
-			</tr>
-		</table>
-		<div class="map_wrap">
-    	<div id="map" style="width:50%;height:50%;position:relative;overflow:hidden;">
-    		<button type="button" id="" onclick="" style="display:none">감추기</button></div>
-
-    		<div id="menu_wrap" class="bg_white" style="height:30%; float: left;">
-        		<div class="option">
-            		<div>
-                    	키워드 : <input type="text" value="이태원"  id="keyword" size="15"> 
-							   <input type="button" value="검색하기" onclick="searchPlaces();">
-            		</div>
-        		</div>
-        		<hr>
-        		<ul id="placesList"></ul>
-        		<div id="pagination"></div>
-        		<div class="hAddr">
-        			<span id="centerAddr"></span>
-        		</div>
-    		</div>
-    		<div style="width: 300px">
+			<th>날씨</th>
+			<td>
+			<div id="weather_info">
+						<p align="right" id="addrs" ></p>
 				<table border="1">
 					<colgroup>
-						<col style="width: 150px; height: 150px;">
-						<col style="width: 150px; height: 150px;">
+							<col style="width: 25%; height: 50%;">
+							<col style="width: 25%; height: 50%;">
+							<col style="width: 25%; height: 50%;">
+							<col style="width: 25%; height: 50%;">
 					</colgroup>
 					<tbody>
 						<tr>
-							<td align="center">습도(%)</td>
-							<td align="center"><span id="reh" ></span></td>
+							<th align="center">습도(%)</th>
+							<th align="center">최저/최고(℃)</th>
+							<th align="center">현재 온도(℃)</th>
+							<th align="center">날씨</th>
 						</tr>
 						<tr>
-							<td align="center">최저/최고(℃)</td>
+							<td align="center"><span id="reh"></span></td>
 							<td align="center"><span id="tmn" style="color: blue"></span><b>/</b><span id="tmx" style="color: red"></span></td>
-						</tr>
-						<tr>
-							<td align="center">현재 온도(℃)</td>
 							<td align="center"><span id="t3h"></span></td>
-						</tr>
-						<tr>
-							<td align="center">날씨</td>
-							<td align="center"><span id="weather_span" ></span><img alt="" src="" id="weather"></td>
+							<td align="center"><span id="weather_span"></span><img alt="" src="" id="weather"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-		</div>
+			</td>
+			
+			</tr>
+			<tr>
+				<td colspan="2">
+				<div class="dioing">
+				<input type="submit" value="수정확인" onclick="submitContents(this)">
+				<input type="button" value="홈으로 이동" onclick="location.href='home.jsp'">
+				</div>
+				</td>
+			</tr>
+		</table>
+	  <div id="userMarkerText" style="display:none" ></div>
 	</form>
+</section>	
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c54788c8f1925b6e8dd99b858e1c6f11&libraries=services"></script>
 <script type="text/javascript" src="js/mapS.js"></script>
 <script type="text/javascript">
@@ -156,25 +154,33 @@
 	}
 </script>
 <script type="text/javascript">
+
 var oEditors = [];
 
 nhn.husky.EZCreator.createInIFrame({
     oAppRef: oEditors,
-    elPlaceHolder: "ir1",
+    elPlaceHolder: "ir12",
     sSkinURI: "/Life_Style/smarteditor/SmartEditor2Skin.html",
     fCreator: "createSEditor2"
 });
+
 //‘저장’ 버튼을 누르는 등 저장을 위한 액션을 했을 때 submitContents가 호출된다고 가정한다.
 function submitContents(elClickedObj) {
     // 에디터의 내용이 textarea에 적용된다.
-    oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+    oEditors.getById["ir12"].exec("UPDATE_CONTENTS_FIELD", []);
+
     // 에디터의 내용에 대한 값 검증은 이곳에서
     // document.getElementById("ir1").value를 이용해서 처리한다.
     try {
+
         elClickedObj.form.submit();
+
     } catch(e) {}
 }
 </script>
-
-</body>
-</html>
+<<script type="text/javascript">
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-meeting1.png');");
+});
+</script>
+<%@ include file="/inc/tail.jsp" %>

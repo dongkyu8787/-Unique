@@ -80,6 +80,7 @@ public class account_dao extends account_sqlmap{
 	}
 	
 	public List<account_dto> selectList(String account_id) {
+		
 		SqlSession session = null;
 		List<account_dto> list = new ArrayList<account_dto>();
 		
@@ -111,10 +112,14 @@ public class account_dao extends account_sqlmap{
 		session = getSqlSessionFactory().openSession();
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("account_id", account_id);
-		
-		int res = session.selectOne(namespace+"selecttotalcash",map);
-		
-		return res;
+		String res = session.selectOne(namespace+"selecttotalcash",map);
+		int rs = 0;
+		System.out.println(res);
+		if(res != null) {
+			System.out.println("들어오니?");
+			rs = Integer.parseInt(res);
+		}
+		return rs;
 	}
 
 	public List<account_dto> searchList(String account_id, String account_min_date, String account_max_date) {

@@ -8,15 +8,9 @@
     pageEncoding="UTF-8"%>
     <% request.setCharacterEncoding("UTF-8");%>
     <% response.setContentType("text/html; charset=UTF-8");%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="js/calendar.js"></script>
-<link rel="stylesheet" href="css/calendar.css">
-</head>
+<%@ include file="inc/head.jsp" %>
+
+<section id="schedule">
 <%
 	Calendar cal = Calendar.getInstance();
 	int year = cal.get(Calendar.YEAR);
@@ -62,15 +56,15 @@
 	member_dto member_dto =  (member_dto)session.getAttribute("member_dto");
 	List<schedule_dto> clist = biz.getCalViewList(member_dto.getMember_id(), yyyMM);
 %>
-<body>
+<div id="board-infoup"><img alt="" src="img/board/board-scheduleup.png"></div>
 <table id="calendar">
         <caption >
-            <a href="schedule.jsp?year=<%=year-1 %>&month=<%=month%>">◀◀</a>
-            <a href="schedule.jsp?year=<%=year %>&month=<%=month-1%>">◁◁</a>
+            <a href="schedule.jsp?year=<%=year-1 %>&month=<%=month%>"><img alt="년 단위" src="img/board/buttoniconBL.png"></a>
+            <a href="schedule.jsp?year=<%=year %>&month=<%=month-1%>"><img alt="년 단위" src="img/board/buttoniconSL.png"></a>
             <span class="y"><%=year %></span>년
             <span class="m"><%=month %></span>월
-            <a href="schedule.jsp?year=<%=year %>&month=<%=month+1%>">▷▷</a>
-            <a href="schedule.jsp?year=<%=year+1 %>&month=<%=month%>">▶▶</a>
+            <a href="schedule.jsp?year=<%=year %>&month=<%=month+1%>"><img alt="년 단위" src="img/board/buttoniconSR.png"></a>
+            <a href="schedule.jsp?year=<%=year+1 %>&month=<%=month%>"><img alt="년 단위" src="img/board/buttoniconBR.png"></a>
         </caption>
         <tr>
             <th class="week" style="color:red;">일</th><th class="week">월</th><th class="week">화</th><th class="week">수</th><th class="week">목</th><th class="week">금</th><th class="week" style="color:blue;">토</th>
@@ -113,6 +107,13 @@
 %>
 		</tbody>
     </table>
-
-</body>
-</html>
+    <div id="board-infoup"><img alt="" src="img/board/board-scheduledown.png"></div>
+    </section>
+<script type="text/javascript" src="js/calendar.js"></script>
+<script>
+$(function() {
+	$("#B-img").attr("style","background-image: url('img/board/board-schedule.png');");
+});
+</script>
+<link rel="stylesheet" href="css/calendar.css">
+<%@ include file="inc/tail.jsp" %>

@@ -36,4 +36,12 @@ public class member_biz {
 	public member_dto kakaologinChk(String member_id, String member_email) {
 		return dao.kakaologinChk(member_id, member_email);
 	}
+
+	public member_dto idsearch(String m_email) {
+		return dao.searchid(m_email);
+	}
+
+	public member_dto pwsearch(String id, String memail) {
+		return dao.searchpw(id,memail);
+	}
 }
