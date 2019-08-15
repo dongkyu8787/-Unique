@@ -316,11 +316,11 @@
                             <a style="text-decoration:none; color:white;" href="javascript:/js/regist.js" onclick="sessionchk3();" >쇼핑</a>
                         </div>
                         <div id="menu4">
-                        	<input type="hidden" id="urllink4" value="health.do?command=health" />
+                        	<input type="hidden" id="urllink4" value="health.do?command=health&page=1" />
                             <a style="text-decoration:none; "  href="javascript:/js/regist.js" onclick="sessionchk4();" >건강</a>
                         </div>
                         <div id="menu5">
-                        	<input type="hidden" id="urllink5" value="account.do?command=account" />
+                        	<input type="hidden" id="urllink5" value="account.do?command=account&page=1" />
                             <a style="text-decoration:none; color:white;"  href="javascript:/js/regist.js" onclick="sessionchk5();" >가계부</a>
                         </div>
                         <div id="menu6">

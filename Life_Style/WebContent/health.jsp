@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -25,9 +26,11 @@
 				</tr>
 				<tr>
 					<th>먹은 음식</th>
-					<td><input type="text" id="food" name="food" value="">
-						<input type="button" value="먹은거" onclick="search();"> <span
-						id="search"></span></td>
+					<td>
+						<input type="text" id="food" name="food" value="">
+						<input type="button" value="먹은거" onclick="search();"> 
+						<span id="search"></span>
+					</td>
 				</tr>
 				<tr>
 					<th>칼로리</th>
@@ -39,14 +42,13 @@
 					</td>
 					<td>
 						<div id="amount_div">
-							<input type="number" id="amount" name="amount">
+							
 						</div>
 					</td>
 				</tr>
 				<tr>
-					<td><input type="submit" value="입력"> <input
-						type="button" value="마이페이지"
-						onclick="location.href='myinformation.do?command=myinformation'">
+					<td>
+						<input type="submit" value="입력"> 
 					</td>
 				</tr>
 			</table>
@@ -73,17 +75,34 @@
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach items="${list }" var="health_dto">
+					<c:forEach begin="${paging.startboard }" end="${paging.endboard }" var="i">
 						<tr>
-							<td>${health_dto.health_id }</td>
-							<td>${health_dto.health_weight }</td>
-							<td>${health_dto.health_food }</td>
-							<td>${health_dto.health_kcal }</td>
-							<td>${health_dto.health_regdate }</td>
+							<td>${list.get(i-1).health_id }</td>
+							<td>${list.get(i-1).health_weight }</td>
+							<td>${list.get(i-1).health_food }</td>
+							<td>${list.get(i-1).health_kcal }Kcal</td>
+							<td><fmt:formatDate value="${list.get(i-1).health_regdate }" pattern="yyyy-MM-dd"/></td>
 						</tr>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
+			<tr align="center">
+				<td colspan="5" >
+					<a href="health.do?command=health&page=${1 }"><img alt="" src="img/board/buttoniconSL.png"></a>
+					<a href="health.do?command=health&page=${paging.startpage - 1 }"> <img alt="" src="img/board/buttonicon1l.png"> </a>
+					<c:if test="${paging.page >= 2 }">
+						<a href="health.do?command=health&page=${paging.startpage - 1  }">...</a>
+					</c:if>
+					<c:forEach begin="${paging.startpage }" end="${paging.endpage }" var="i">
+						<a href="health.do?command=health&page=${i }" id="fsize">${i }</a>
+					</c:forEach>
+					<c:if test="${paging.page < paging.totalpage - 2 }">
+						<a href="health.do?command=health&page=${paging.startpage + 1  }">...</a>
+					</c:if>
+					<a href="health.do?command=health&page=${paging.startpage + 1 }"> <img alt="" src="img/board/buttonicon1r.png"> </a>
+					<a href="health.do?command=health&page=${paging.totalpage }"> <img alt="" src="img/board/buttoniconSR.png"> </a>
+				</td>
+			</tr>
 		</table>
 	</div>
 </section>

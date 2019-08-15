@@ -67,7 +67,6 @@ public class meetingboard_controller extends HttpServlet {
 			
 			paging.setTotalpage(board_list.size());
 			
-			
 			if(page<=1) {
 				page = 1;
 			} else if(page >=paging.getTotalpage()) {

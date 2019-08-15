@@ -34,16 +34,15 @@ public class schedule_controller extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		String command = request.getParameter("command");
-		
 		schedule_biz biz = new schedule_biz();
+		
 		member_dto member_dto = (member_dto)request.getSession().getAttribute("member_dto");
 		if(command.equals("calendar")) {
 			response.sendRedirect("schedule.jsp");
 		}
 		else if(command.equals("cpreview")) {
-			String id = request.getParameter("id");
+			String id = member_dto.getMember_id();
 			String yyyyMMdd = request.getParameter("yyyyMMdd");
-			
 			int count = biz.getCalViewCount(id, yyyyMMdd);
 
 			Map<String, Integer> map = new HashMap<String, Integer>();

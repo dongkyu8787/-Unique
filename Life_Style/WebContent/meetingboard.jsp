@@ -110,21 +110,21 @@ response.setHeader("Expires","0");
 				</tr>
 				<tr align="center">
 					<td colspan="6" >
-					<a href="meetingboard.do?command=meetingboard&page=${1 }&search=${search}&searchtxt=${searchtxt}"><img alt="" src="img/board/buttoniconSL.png"></a>
-					<a href="meetingboard.do?command=meetingboard&page=${paging.startpage - 1 }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttonicon1l.png"> </a>
+						<a href="meetingboard.do?command=meetingboard&page=${1 }&search=${search}&searchtxt=${searchtxt}"><img alt="" src="img/board/buttoniconSL.png"></a>
+						<a href="meetingboard.do?command=meetingboard&page=${paging.startpage - 1 }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttonicon1l.png"> </a>
 						<c:if test="${paging.page >= 2 }">
 							<a href="meetingboard.do?command=meetingboard&page=${paging.startpage - 1  }&search=${search}&searchtxt=${searchtxt}">...</a>
 						</c:if>
-					<c:forEach begin="${paging.startpage }" end="${paging.endpage }" var="i">
-						<a href="meetingboard.do?command=meetingboard&page=${i }&search=${search}&searchtxt=${searchtxt}" id="fsize">${i }</a>
-					</c:forEach>
+						<c:forEach begin="${paging.startpage }" end="${paging.endpage }" var="i">
+							<a href="meetingboard.do?command=meetingboard&page=${i }&search=${search}&searchtxt=${searchtxt}" id="fsize">${i }</a>
+						</c:forEach>
 						<c:if test="${paging.page < paging.totalpage - 2 }&search=${search}&searchtxt=${searchtxt}">
-						<a href="meetingboard.do?command=meetingboard&page=${paging.startpage + 1  }&search=${search}&searchtxt=${searchtxt}">...</a>
+							<a href="meetingboard.do?command=meetingboard&page=${paging.startpage + 1  }&search=${search}&searchtxt=${searchtxt}">...</a>
 						</c:if>
-					<a href="meetingboard.do?command=meetingboard&page=${paging.startpage + 1 }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttonicon1r.png"> </a>
-					<a href="meetingboard.do?command=meetingboard&page=${paging.totalpage }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttoniconSR.png"> </a>
-			</td>
-		</tr>
+						<a href="meetingboard.do?command=meetingboard&page=${paging.startpage + 1 }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttonicon1r.png"> </a>
+						<a href="meetingboard.do?command=meetingboard&page=${paging.totalpage }&search=${search}&searchtxt=${searchtxt}"> <img alt="" src="img/board/buttoniconSR.png"> </a>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</form>

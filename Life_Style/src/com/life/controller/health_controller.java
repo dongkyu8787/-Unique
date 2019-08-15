@@ -39,6 +39,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.life.biz.health_biz;
+import com.life.dao.Paging;
 import com.life.dto.health_dto;
 import com.life.dto.member_dto;
 import com.sun.org.apache.xerces.internal.util.XML11Char;
@@ -59,7 +60,8 @@ public class health_controller extends HttpServlet {
 		String command = request.getParameter("command");
 
 		health_biz biz = new health_biz();
-
+		Paging paging = new Paging();
+		
 		member_dto member_dto = (member_dto)request.getSession().getAttribute("member_dto");
 		if (command.equals("food")) {
 			String desc_kor = request.getParameter("DESC_KOR");
@@ -120,6 +122,25 @@ public class health_controller extends HttpServlet {
 			List<health_dto> list = new ArrayList<health_dto>();
 			String member_id = member_dto.getMember_id();
 			list = biz.selectList(member_id);
+			
+			int page = Integer.parseInt(request.getParameter("page"));
+			
+			paging.setTotalpage(list.size());
+			
+			if(page<=1) {
+				page = 1;
+			} else if(page >=paging.getTotalpage()) {
+				page = paging.getTotalpage();
+			}
+
+			paging.setPage(page);
+			
+			paging.setStartboard();
+			paging.setEndboard();
+			paging.setStartpage();
+			paging.setEndpage();
+			
+			request.setAttribute("paging", paging);
 
 			request.setAttribute("list", list);
 
@@ -154,10 +175,10 @@ public class health_controller extends HttpServlet {
 			int res = biz.insert(dto);
 
 			if (res > 0) {
-				response.sendRedirect("health.do?command=health");
+				response.sendRedirect("health.do?command=health&page=1");
 
 			} else {
-				response.sendRedirect("health.do?command=health");
+				response.sendRedirect("health.do?command=health&page=1");
 			}
 
 		} else if (command.equals("search")) {

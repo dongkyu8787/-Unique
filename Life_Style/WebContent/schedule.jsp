@@ -60,10 +60,10 @@
 <table id="calendar">
         <caption >
             <a href="schedule.jsp?year=<%=year-1 %>&month=<%=month%>"><img alt="년 단위" src="img/board/buttoniconBL.png"></a>
-            <a href="schedule.jsp?year=<%=year %>&month=<%=month-1%>"><img alt="년 단위" src="img/board/buttoniconSL.png"></a>
+            <a href="schedule.jsp?year=<%=year %>&month=<%=month-1%>"><img alt="월 단위" src="img/board/buttoniconSL.png"></a>
             <span class="y"><%=year %></span>년
             <span class="m"><%=month %></span>월
-            <a href="schedule.jsp?year=<%=year %>&month=<%=month+1%>"><img alt="년 단위" src="img/board/buttoniconSR.png"></a>
+            <a href="schedule.jsp?year=<%=year %>&month=<%=month+1%>"><img alt="월 단위" src="img/board/buttoniconSR.png"></a>
             <a href="schedule.jsp?year=<%=year+1 %>&month=<%=month%>"><img alt="년 단위" src="img/board/buttoniconBR.png"></a>
         </caption>
         <tr>

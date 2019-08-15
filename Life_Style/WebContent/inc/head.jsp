@@ -143,7 +143,7 @@
         /* meetingboard_list Start */
         #wrap main #meetingboard_list { padding:10px 0; }
         #wrap main #meetingboard_list div img { width: 25px;padding: 0px 1px 0 0;}
-         #wrap main #meetingboard_list a {text-decoration:none;}
+        #wrap main #meetingboard_list a {text-decoration:none;}
         #wrap main #meetingboard_list #fsize {font-size: 25px;}
         #wrap main #meetingboard_list table { width:100%; border-collapse:collapse; border:0px #ccc solid; margin:auto; }
         #wrap main #meetingboard_list table th { padding:5px 0 5px 0; border:1px #fdfdfd  solid; border-radius: 1px; background: #eccbbb;}
@@ -179,7 +179,9 @@
        	#wrap main #account #downdiv table { width:100%; border-collapse:collapse; border:0px #ccc solid; margin:auto; }
         #wrap main #account #downdiv table th { padding:5px 0 5px 0; border:1px #fdfdfd  solid; border-radius: 1px; background: #eccbbb;}
         #wrap main #account #downdiv table td { padding:5px 0 5px 0; border-top:0.5px #f4e4e4 solid;  border-radius: 1px;}
-        
+        #wrap main #account #fsize {font-size: 25px;}
+        #wrap main #account div img { width: 25px;padding: 0px 1px 0 0;}
+        #wrap main #account a {text-decoration:none;}
         #wrap main #account #calendar 
         /* account End */
         
@@ -191,6 +193,9 @@
        	#wrap main #health #downdiv table { width:100%; border-collapse:collapse; border:0px #ccc solid; margin:auto; }
         #wrap main #health #downdiv table th { padding:5px 0 5px 0; border:1px #fdfdfd  solid; border-radius: 1px; background: #eccbbb;}
         #wrap main #health #downdiv table td { padding:5px 0 5px 0; border-top:0.5px #f4e4e4 solid;  border-radius: 1px;}
+        #wrap main #health #fsize {font-size: 25px;}
+        #wrap main #health a {text-decoration:none;}
+        #wrap main #health div img { width: 25px;padding: 0px 1px 0 0;}
         /* health End */
         
         /* statistics Start */
@@ -312,19 +317,18 @@ function compare(){
             </div>
             <div id="iconmenu">
             	<a href="#" onclick="open('whisper.do?command=message_box','메세지 함','width=360, height=300')"><img src="img/board/paper-plane.png"></a>
-            	<a href="#" onclick="open('http://192.168.10.6:8090/?id=${member_dto.member_id}','채팅창','width=500, height=700')"target="_blank"><img src="img/board/chatting.png"></a>
+            	<a href="#" onclick="open('http://175.210.170.248:8090/?id=${member_dto.member_id}','채팅창','width=500, height=700')"target="_blank"><img src="img/board/chatting.png"></a>
             	<a href="#" onclick="open('friend.do?command=friend_box','메세지 함','width=360, height=300')"><img src="img/board/friendship.png"></a>
             </div>
             
         </header>
         <main>
-        
                 <nav >
                      <span><a class="myinfo" href="myinformation.do?command=memberinfo&id="><img src="img/board/myinfo.png" ></a></span>
-                     <span><a class="heartbeat" href="health.do?command=health"><img src="img/board/heartbeat.png" ></a></span>
+                     <span><a class="heartbeat" href="health.do?command=health&page=1"><img src="img/board/heartbeat.png" ></a></span>
                      <span><a class="schedule" href="schedule.do?command=calendar"><img src="img/board/schedule.png" ></a></span>
                      <span><a class="group" href="meetingboard.do?command=meetingboard&page=1"><img src="img/board/group.png" ></a></span>
-                     <span><a class="account" href="account.do?command=account"><img src="img/board/account.png" ></a></span>
+                     <span><a class="account" href="account.do?command=account&page=1"><img src="img/board/account.png" ></a></span>
                      <span><a class="presentation" href="statistics.do?command=statistics"><img src="img/board/presentation.png" ></a></span>
                      <span><a class="shopping" href="shopping.do?command=shop_main"><img src="img/board/shopping.png" ></a></span>
                 </nav>

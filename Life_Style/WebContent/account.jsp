@@ -3,6 +3,7 @@
 <% request.setCharacterEncoding("UTF-8");%>
 <% response.setContentType("text/html; charset=UTF-8");%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="inc/head.jsp" %>
 
 <section id="account">
@@ -27,7 +28,6 @@
 				</tr>
 				<tr>
 					<td><input type="submit" value="입력"> 
-					<input type="button" value="마이페이지" onclick="location.href='myinformation.do?command=myinformation'">
 					</td>
 				</tr>
 			</table>
@@ -37,11 +37,11 @@
 		<h1>가계부</h1>
 		<table border="1" >
 			<col width="100">
-			<col width="100">
+			<col width="200">
+			<col width="350">
+			<col width="350">
 			<col width="400">
-			<col width="400">
-			<col width="500">
-			<col width="400">
+			<col width="350">
 			<tr>
 				<th>번호</th>
 				<th>날짜</th>
@@ -57,18 +57,36 @@
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach items="${list }" var="dto">
+				
+					<c:forEach begin="${paging.startboard }" end="${paging.endboard }" var="i">
 						<tr>
-							<td>${dto.account_io_no }</td>
-							<td>${dto.account_date }</td>
-							<td>${dto.account_in_cash }</td>
-							<td>${dto.account_out_cash }</td>
-							<td>${dto.account_io_content }</a></td>
-							<td>${dto.account_totalcash }</td>
+							<td>${list.get(i-1).account_io_no }</td>
+							<td><fmt:formatDate value="${list.get(i-1).account_date }" pattern="yyyy-MM-dd"/></td>
+							<td>+ ${list.get(i-1).account_in_cash }원</td>
+							<td>- ${list.get(i-1).account_out_cash }원</td>
+							<td>${list.get(i-1).account_io_content }</a></td>
+							<td>${list.get(i-1).account_totalcash }원</td>
 						</tr>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>
+			<tr align="center">
+				<td colspan="6" >
+					<a href="account.do?command=account&page=${1 }"><img alt="" src="img/board/buttoniconSL.png"></a>
+					<a href="account.do?command=account&page=${paging.startpage - 1 }"> <img alt="" src="img/board/buttonicon1l.png"> </a>
+					<c:if test="${paging.page >= 2 }">
+						<a href="account.do?command=account&page=${paging.startpage - 1  }">...</a>
+					</c:if>
+					<c:forEach begin="${paging.startpage }" end="${paging.endpage }" var="i">
+						<a href="account.do?command=account&page=${i }" id="fsize">${i }</a>
+					</c:forEach>
+					<c:if test="${paging.page < paging.totalpage - 2 }">
+						<a href="account.do?command=account&page=${paging.startpage + 1  }">...</a>
+					</c:if>
+					<a href="account.do?command=account&page=${paging.startpage + 1 }"> <img alt="" src="img/board/buttonicon1r.png"> </a>
+					<a href="account.do?command=account&page=${paging.totalpage }"> <img alt="" src="img/board/buttoniconSR.png"> </a>
+				</td>
+			</tr>
 		</table>
 	</div>
 </section>

@@ -14,10 +14,7 @@ List<String> list_title = (List<String>)request.getAttribute("title");
 List<String> list_price = (List<String>)request.getAttribute("price");
 %>
 
-
-
-
-	<input type="text" id="search_shop">
+	<input type="text" id="search_shop" placeholder="검색할 물품">
 	<input type="button" id="search_button" onclick="search()" value="검색">
 	<div style="overflow: scroll; height: 800px">
 	<%

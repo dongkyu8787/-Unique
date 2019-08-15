@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.life.biz.account_biz;
+import com.life.dao.Paging;
 import com.life.dto.account_dto;
 import com.life.dto.member_dto;
 
@@ -29,7 +30,8 @@ public class account_controller extends HttpServlet {
 	  response.setContentType("text/html; charset=UTF-8");
 	  
 	  String command = request.getParameter("command");
-	  
+
+	  Paging paging = new Paging();
 	  account_biz biz = new account_biz();
 	  member_dto member_dto = (member_dto)request.getSession().getAttribute("member_dto");
 	  if (command.equals("insertres")) {
@@ -51,9 +53,9 @@ public class account_controller extends HttpServlet {
 		  int res = biz.insert(dto, id);
 		  
 		  if(res > 0) {
-			 response.sendRedirect("account.do?command=account");
+			 response.sendRedirect("account.do?command=account&page=1");
 		  } else {
-			  response.sendRedirect("account.do?command=account");
+			  response.sendRedirect("account.do?command=account&page=1");
 		  }
 	  } else if(command.equals("account")) {
 		  
@@ -62,6 +64,25 @@ public class account_controller extends HttpServlet {
 		  String account_id =member_dto.getMember_id();
 		  list = biz.selectList(account_id);
 		  
+		  int page = Integer.parseInt(request.getParameter("page"));
+			
+		  paging.setTotalpage(list.size());
+			
+		  if(page<=1) {
+			  page = 1;
+		  } else if(page >=paging.getTotalpage()) {
+			  page = paging.getTotalpage();
+		  }
+
+		  paging.setPage(page);
+			
+		  paging.setStartboard();
+		  paging.setEndboard();
+		  paging.setStartpage();
+		  paging.setEndpage();
+			
+		  request.setAttribute("paging", paging);
+			
 		  request.setAttribute("list", list);
 		  dispatch(request, response, "account.jsp"); 
 	  } else if(command.equals("selectone")) {
@@ -73,7 +94,7 @@ public class account_controller extends HttpServlet {
 		  
 		  request.setAttribute("account", account_dto);
 		  
-		  dispatch(request, response, "account.do?command=account"); 
+		  dispatch(request, response, "account.do?command=account&page=1"); 
 	  }
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

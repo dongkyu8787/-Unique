@@ -60,7 +60,7 @@ public class statistics_controller extends HttpServlet {
 			c.set(Calendar.DATE, day);
 			
 			String data = account_day_value(c, year, month, acc_biz, member_dto.getMember_id()) + "§" + account_week_value(c, year, month, acc_biz, member_dto.getMember_id()) +
-							"§" + kcal_day_value(c, date, health_biz, member_dto.getMember_id()) + "§" + kcal_week_value(c, year, month, day, health_biz, member_dto.getMember_id());
+							"§" + kcal_day_value(c, date, health_biz, member_dto.getMember_id()) + "§" + kcal_week_value(year, month, day, health_biz, member_dto.getMember_id());
 			
 			PrintWriter out = response.getWriter();
 			out.print(data);
@@ -74,7 +74,7 @@ public class statistics_controller extends HttpServlet {
 			
 			String date = year + "-" + month + "-" + day;
 			String data = account_day_value(c, year, month, acc_biz, member_dto.getMember_id()) + "§" + account_week_value(c, year, month, acc_biz, member_dto.getMember_id()) +
-							"§" + kcal_day_value(c, date, health_biz, member_dto.getMember_id()) + "§" + kcal_week_value(c, year, month, day, health_biz, member_dto.getMember_id());
+							"§" + kcal_day_value(c, date, health_biz, member_dto.getMember_id()) + "§" + kcal_week_value(year, month, day, health_biz, member_dto.getMember_id());
 			
 			PrintWriter out = response.getWriter();
 			out.print(data);
@@ -111,15 +111,20 @@ public class statistics_controller extends HttpServlet {
 		
 		String labels =""; //요일
 		String series_value =""; // 값
-		
-		for(int i = 0; i < account_list.size(); ++i) {
-			if(i == account_list.size() -1) {
-				labels += account_list.get(i).getAccount_days();
-				series_value += account_list.get(i).getAccount_out_cash() + "";
-			}else {
-				labels += account_list.get(i).getAccount_days() + "/";
-				series_value += account_list.get(i).getAccount_out_cash() + "/";
+		if(!account_list.isEmpty()) {
+			for(int i = 0; i < account_list.size(); ++i) {
+				if(i == account_list.size() -1) {
+					labels += account_list.get(i).getAccount_days();
+					series_value += account_list.get(i).getAccount_out_cash() + "";
+				}else {
+					labels += account_list.get(i).getAccount_days() + "/";
+					series_value += account_list.get(i).getAccount_out_cash() + "/";
+				}
 			}
+		}
+		else {
+			labels = "일/월/화/수/목/금/토";
+			series_value = "0/0/0/0/0/0/0";
 		}
 		
 		String data = labels+"_"+series_value;
@@ -146,7 +151,11 @@ public class statistics_controller extends HttpServlet {
 			if(i == c.get(Calendar.WEEK_OF_MONTH)) {
 				for(int j = 0; j < 7; ++j) {
 					if(((i-1)*7+j) < month_endday) {
-						account_week_out += account_week.get((i-1)*7+j).getAccount_out_cash();
+						if(account_week.size() > ((i-1)*7+j) && !account_week.isEmpty()) {
+							account_week_out += account_week.get((i-1)*7+j).getAccount_out_cash();
+						}
+						else
+							account_week_out += 0;
 					}
 				}
 				series_value += account_week_out +"";
@@ -154,7 +163,12 @@ public class statistics_controller extends HttpServlet {
 			}else {
 				for(int j = 0; j < 7; ++j) {
 					if(((i-1)*7+j) < month_endday) {
-						account_week_out += account_week.get((i-1)*7+j).getAccount_out_cash();
+						
+						if(account_week.size() > ((i-1)*7+j) && !account_week.isEmpty()) {
+							account_week_out += account_week.get((i-1)*7+j).getAccount_out_cash();
+						}
+						else
+							account_week_out += 0;
 					}
 				}
 				series_value += account_week_out +"/";
@@ -165,57 +179,32 @@ public class statistics_controller extends HttpServlet {
 		return data;
 	}
 
-	public String account_month_value(Calendar c, int year, int month, account_biz acc_biz, String member_id) {
-		String week_min_date = year + "-" + Util.isTwo(01+"") + "-" + Util.isTwo(01+"");
-		String week_max_date = year + "-" + Util.isTwo(12+"") + "-" + Util.isTwo(31+"");
-		
-		List<account_dto> account_week = acc_biz.searchList(member_id, week_min_date, week_max_date);
-		
-		String labels =""; //요일
-		String series_value =""; // 값
-		String data = "";
-		
-		for(int i = 1; i <= 12; ++i) {
-			int account_month_out = 0;
-			c.set(Calendar.MONTH, i);
-			
-			if(i == 12) {
-				for(int j = 0; j < c.getActualMaximum(Calendar.DAY_OF_MONTH); ++j) {
-					account_month_out += account_week.get(j).getAccount_out_cash();
-				}
-				series_value += account_month_out +"";
-				labels += i+"월";
-			}else {
-				for(int j = 0; j < c.getActualMaximum(Calendar.DAY_OF_MONTH); ++j) {
-					account_month_out += account_week.get(j).getAccount_out_cash();
-				}
-				series_value += account_month_out +"/";
-				labels += i+"월/";
-			}
-		}
-		
-		return "";
-	}
-
 	public String kcal_day_value(Calendar c, String date, health_biz health_biz, String member_id) {
 		List<health_dto> health_list = health_biz.searchList(member_id, date, date);
 		
 		String data = "";
-		
-		for(health_dto dto : health_list) {
-			data = Float.toString(dto.getHealth_kcal());
+		if(!health_list.isEmpty()) {
+			for(health_dto dto : health_list) {
+				data = Float.toString(dto.getHealth_kcal());
+			}
+		}else {
+			data = "0";
 		}
-		
 		return data;
 	}
 	
-	public String kcal_week_value(Calendar c, int year, int month, int day, health_biz health_biz, String member_id) {
+	public String kcal_week_value(int year, int month, int day, health_biz health_biz, String member_id) {
 		String data = "";
+		Calendar c = Calendar.getInstance();
+		
+		c.set(Calendar.YEAR, year);
+		c.set(Calendar.MONTH, month - 1);
+		c.set(Calendar.DATE, day);
 		
 		int sunday = 0;
 		int saturday = 0;
-		
-		if(1 == c.get(Calendar.WEEK_OF_MONTH)) {
+		System.out.println(c.get(Calendar.DAY_OF_WEEK));
+		if(1 == c.get(Calendar.DAY_OF_WEEK)) {
 			sunday = 1;
 			saturday = day + (7 - c.get(Calendar.DAY_OF_WEEK));
 		}else {
@@ -225,7 +214,8 @@ public class statistics_controller extends HttpServlet {
 		
 		String day_min_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(sunday+"");
 		String day_max_date = year + "-" + Util.isTwo(month+"") + "-" + Util.isTwo(saturday+"");
-		
+		System.out.println(day_min_date);
+		System.out.println(day_max_date);
 		List<health_dto> health_week = health_biz.searchList(member_id, day_min_date, day_max_date);
 		float kcal = 0.f;
 		for(health_dto dto: health_week) {
