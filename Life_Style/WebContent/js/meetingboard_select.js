@@ -1,8 +1,8 @@
 function attenduser(member_id,board_no_seq,board_viewnum,board_peoplelimit){
 	const attend_user = document.getElementsByClassName("attends");
-	let attend_users = '';
 	let bool = false;
-	
+	alert(attend_user);
+	alert(attend_user.length);
 	if(attend_user.length == 0)
 		location.href = 'meetingboard.do?command=attendupdate&attend_user='+member_id+'&board_no_seq='+board_no_seq+'&board_dto.board_viewnum='+board_viewnum;
 	else{
@@ -58,7 +58,6 @@ $.ajax({
 	type : "post",
 	data : 'command=insert&friend_id='+id
 }).done(function(data){
-	alert(data);
 })
 }
 

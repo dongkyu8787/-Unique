@@ -47,7 +47,7 @@ public class login_controller extends HttpServlet {
 			} else {
 				HttpSession session = request.getSession();
 				session.setAttribute("member_dto", member_dto);
-				session.setMaxInactiveInterval(10 * 60);
+				session.setMaxInactiveInterval(-1);
 
 				PrintWriter out = response.getWriter();
 				out.println(id);

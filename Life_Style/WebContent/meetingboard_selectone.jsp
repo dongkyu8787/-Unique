@@ -110,9 +110,11 @@
 		<tr>
 			<td colspan="2">
 			<div class="dioing">
-			
-				<input type="button" value="수정" onclick="location.href='meetingboard.do?command=meetingupdate&board_no_seq=${board_dto.board_no_seq}'">
-				<input type="button" value="삭제" onclick="location.href='meetingboard.do?command=meetingdelete&board_no_seq=${board_dto.board_no_seq}'">
+				<c:if test="${board_dto.board_writer eq member_dto.member_id}">
+					<input type="button" value="수정" onclick="location.href='meetingboard.do?command=meetingupdate&board_no_seq=${board_dto.board_no_seq}'">
+					<input type="button" value="삭제" onclick="location.href='meetingboard.do?command=meetingdelete&board_no_seq=${board_dto.board_no_seq}'">
+				</c:if>
+				
 			</div>
 			</td>
 		</tr>

@@ -317,7 +317,7 @@ function compare(){
             </div>
             <div id="iconmenu">
             	<a href="#" onclick="open('whisper.do?command=message_box','메세지 함','width=360, height=300')"><img src="img/board/paper-plane.png"></a>
-            	<a href="#" onclick="open('http://192.168.10.6:8090/?id=${member_dto.member_id}','채팅창','width=500, height=700')"target="_blank"><img src="img/board/chatting.png"></a>
+            	<a href="#" onclick="open('http://175.210.170.248:8090/?id=${member_dto.member_id}','채팅창','width=500, height=700')"target="_blank"><img src="img/board/chatting.png"></a>
             	<a href="#" onclick="open('friend.do?command=friend_box','메세지 함','width=360, height=300')"><img src="img/board/friendship.png"></a>
             </div>
             

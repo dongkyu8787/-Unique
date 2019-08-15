@@ -44,7 +44,7 @@
 							<td>
 							<c:choose>
 								<c:when test="${message_dto.message_read eq 'N'}">
-								<img alt="" src="img/message.png">
+								<img alt="" src="img/message.png" style=" width: 22px; height: 22px;">
 									<a href="whisper.do?command=selectone&message_no=${message_dto.message_no}">
 										<jsp:setProperty property="messageContent" name="util" value="${message_dto.message_content }"/>
 										<jsp:getProperty property="messageContent" name="util"/>

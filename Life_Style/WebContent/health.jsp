@@ -17,10 +17,6 @@
 		<form action="health.do?command=insertres" method="post">
 			<table>
 				<tr>
-					<th>ID</th>
-					<td><input type="text" name="id" value=""></td>
-				</tr>
-				<tr>
 					<th>몸무게</th>
 					<td><input type="text" name="weight" value=""></td>
 				</tr>
